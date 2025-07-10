@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private FrameInput _frameInput;
     private Movement _movement;
     private Rigidbody2D _rigidBody;
+    private Collider2D _isGrounded;
 
     public void Awake()
     {
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         GatherInput();
         Movement();
+        _isGrounded = Physics2D.OverlapBox(_feetTransform.position, _groundCheck, 0f, _groundLayer);
         CoyoteTimer();
         HandleJump();
         GravityDelay();
@@ -72,8 +74,8 @@ public class PlayerController : MonoBehaviour
 
     public bool CheckGrounded()
     {
-        Collider2D isGrounded = Physics2D.OverlapBox(_feetTransform.position, _groundCheck, 0f, _groundLayer);
-        return isGrounded;
+        //Collider2D isGrounded = Physics2D.OverlapBox(_feetTransform.position, _groundCheck, 0f, _groundLayer);
+        return _isGrounded;
     }
 
     void OnDrawGizmos()

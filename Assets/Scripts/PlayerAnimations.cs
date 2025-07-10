@@ -24,6 +24,8 @@ public class PlayerAnimations : MonoBehaviour
 
     void Move()
     {
+        _hasHorizontalSpeed = PlayerController.Instance.MoveInput.x != 0;
+
         if (!_isJumping && !_isFalling && _hasHorizontalSpeed)
         {
             _bodyAnimator.SetBool("isRunning", true);
@@ -36,6 +38,7 @@ public class PlayerAnimations : MonoBehaviour
 
     void AirMove()
     {
+        _isJumping = !PlayerController.Instance.CheckGrounded();
         _bodyAnimator.SetBool("isJumping", _isJumping);
         _bodyAnimator.SetBool("isFalling", _isFalling);
     }

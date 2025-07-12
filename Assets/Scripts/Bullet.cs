@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     private Vector2 _fireDirection;
     private Rigidbody2D _rigidBody;
     private Gun _gun;
+    private Shooter _shooter;
 
     private void Awake()
     {
@@ -29,10 +30,24 @@ public class Bullet : MonoBehaviour
         _fireDirection = (mousePos - bulletSpawnPos).normalized;
     }
 
+    public void Init(Shooter shooter, Vector2 bulletSpawnPos, Vector2 targetDir)
+    {
+        _shooter = shooter;
+        transform.position = bulletSpawnPos;
+        _fireDirection = targetDir.normalized;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Instantiate(_bulletVFX, transform.position, Quaternion.identity);
 
-        _gun.ReleaseBulletFromPool(this);
+        if (_gun != null)
+        {
+            _gun.ReleaseBulletFromPool(this);
+        }
+        else if (_shooter != null)
+        {
+            _shooter.ReleaseBulletFromPool(this);
+        }
     }
 }

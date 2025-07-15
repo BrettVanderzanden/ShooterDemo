@@ -379,6 +379,7 @@ GameObject:
   - component: {fileID: 8276531168662363181}
   - component: {fileID: 1834032242073717515}
   - component: {fileID: 2084083494325077376}
+  - component: {fileID: -2153814571909666182}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -611,6 +612,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bodySpriteTransform: {fileID: 1300673343809911322}
   _headSpriteTransform: {fileID: 7477812298240354590}
+--- !u!114 &-2153814571909666182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6763881267423382630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54275930c187ffd48b60e91042c302ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startingHealth: 100
 --- !u!1 &8529383528688140698
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletSpawnPoint: {fileID: 2078230713373596090}
   _bulletPrefab: {fileID: 8696355416379102987, guid: ac336c7d505c9f441bf8b25002114715, type: 3}
-  _gunFireCD: 0.5
+  _gunFireCD: 0.1
 --- !u!95 &2070343083384390713
 Animator:
   serializedVersion: 7

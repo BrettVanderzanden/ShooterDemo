@@ -41,6 +41,12 @@ public class Bullet : MonoBehaviour
     {
         Instantiate(_bulletVFX, transform.position, Quaternion.identity);
 
+        IHittable iHittable = other.gameObject.GetComponent<IHittable>();
+        iHittable?.TakeHit();
+
+        IDamageable iDamageable = other.gameObject.GetComponent<IDamageable>();
+        iDamageable?.TakeDamage(transform.position, _damageAmount);
+
         if (_gun != null)
         {
             _gun.ReleaseBulletFromPool(this);

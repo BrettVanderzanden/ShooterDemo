@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
@@ -9,13 +7,11 @@ public class Health : MonoBehaviour, IDamageable
 
     [SerializeField] private int _startingHealth = 100;
 
-    private Health _health;
     private Knockback _knockback;
     private int _currentHealth;
 
     private void Awake()
     {
-        _health = GetComponent<Health>();
         _knockback = GetComponent<Knockback>();
     }
 
@@ -29,9 +25,9 @@ public class Health : MonoBehaviour, IDamageable
         _currentHealth = _startingHealth;
     }
 
-    public void TakeDamage(int amount)
+    private void TakeDamage(int dmg)
     {
-        _currentHealth -= amount;
+        _currentHealth -= dmg;
 
         if (_currentHealth <= 0)
         {
@@ -42,7 +38,7 @@ public class Health : MonoBehaviour, IDamageable
 
     public void TakeDamage(Vector2 damageSourceDir, int damageAmount, float knockbackThrust)
     {
-        _health.TakeDamage(damageAmount);
+        TakeDamage(damageAmount);
         _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);
     }
 

@@ -2,13 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     public Vector2 MoveInput => _frameInput.Move;
 
     public static Action OnJump;
-
-    public static PlayerController Instance;
 
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
@@ -18,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _gravityDelay = 0.25f;
     [SerializeField] private float _coyoteTime = 0.1f;
     [SerializeField] private float _maxFallSpeedVelocity = -25f;
+    [SerializeField] private bool _spawnAtStartPoint = true;
 
     private float _timeInAir;
     private float _coyoteTimer;
@@ -28,14 +27,29 @@ public class PlayerController : MonoBehaviour
     private Movement _movement;
     private Rigidbody2D _rigidBody;
     private Collider2D _isGrounded;
+    private Vector3 _defaultScenePlacement;
 
-    public void Awake()
+    protected override void Awake()
     {
-        if (Instance == null) { Instance = this; }
+        base.Awake();
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
         _movement = GetComponent<Movement>();
+        _defaultScenePlacement = transform.position;
+    }
+
+    private void Start()
+    {
+        var startpoint = FindAnyObjectByType<StartPoint>();
+        if (_spawnAtStartPoint)
+        {
+            transform.position = startpoint.transform.position;
+        }
+        else
+        {
+            transform.position = _defaultScenePlacement;
+        }
     }
 
     private void OnEnable()

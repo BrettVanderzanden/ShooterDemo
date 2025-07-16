@@ -20,6 +20,7 @@ public class AudioManager : Singleton<AudioManager>
 
     private void OnDisable()
     {
+        Target.OnTargetBreak -= HandleTargetBreak;
     }
 
     #endregion

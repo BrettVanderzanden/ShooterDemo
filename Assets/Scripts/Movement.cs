@@ -23,12 +23,14 @@ public class Movement : MonoBehaviour
     {
         _knockback.OnKnockBackStart += CanMoveFalse;
         _knockback.OnKnockBackEnd += CanMoveTrue;
+        PlayerHealth.OnDeath += HandlePlayerDeath;
     }
 
     void OnDisable()
     {
         _knockback.OnKnockBackStart -= CanMoveFalse;
         _knockback.OnKnockBackEnd -= CanMoveTrue;
+        PlayerHealth.OnDeath -= HandlePlayerDeath;
     }
 
     private void FixedUpdate()
@@ -49,6 +51,12 @@ public class Movement : MonoBehaviour
     private void CanMoveFalse()
     {
         _canMove = false;
+    }
+
+    private void HandlePlayerDeath(PlayerHealth health)
+    {
+        _canMove = false;
+        _rigidBody.linearVelocity = Vector2.zero;
     }
 
     private void Move()

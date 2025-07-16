@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
@@ -42,20 +43,36 @@ public class EnemyAI : MonoBehaviour
 
     private void MovementStateControl()
     {
-        switch (_state)
+        if (PlayerController.Instance)
         {
-            case State.Idle:
-                Idle();
-                break;
-            case State.Roaming:
-                Roaming();
-                break;
-            case State.Attacking:
-                Attacking();
-                break;
-            default:
-                break;
+            switch (_state)
+            {
+                case State.Idle:
+                    Idle();
+                    break;
+                case State.Roaming:
+                    Roaming();
+                    break;
+                case State.Attacking:
+                    Attacking();
+                    break;
+                default:
+                    break;
+            }
         }
+        else
+        {
+            MindlessRoaming();
+        }
+        
+    }
+
+    private void StartIdle()
+    {
+        //Debug.Log("Idle");
+        _timeIdling = 0f;
+        _timeRoaming = 0f;
+        _state = State.Idle;
     }
 
     private void Idle()
@@ -71,10 +88,17 @@ public class EnemyAI : MonoBehaviour
 
         if (_timeIdling > _idleTimer)
         {
-            _state = State.Roaming;
-            _roamDirection = GetRoamingDirection();
-            //Debug.Log("Roaming");
+            StartRoaming();
         }
+    }
+
+    private void StartRoaming()
+    {
+        //Debug.Log("Roaming");
+        _state = State.Roaming;
+        _timeIdling = 0f;
+        _timeRoaming = 0f;
+        _roamDirection = GetRoamingDirection();
     }
 
     private void Roaming()
@@ -90,15 +114,12 @@ public class EnemyAI : MonoBehaviour
 
         if (_timeRoaming > _roamChangeDirTimer)
         {
-            _state = State.Idle;
-            //Debug.Log("Idle");
+            StartIdle();
         }
     }
 
     private float GetRoamingDirection()
     {
-        _timeIdling = 0f;
-        _timeRoaming = 0f;
         return Random.Range(-1f, 1f);
     }
 
@@ -106,9 +127,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) > _attackRange)
         {
-            _state = State.Roaming;
-            //Debug.Log("Roaming");
-            _roamDirection = GetRoamingDirection();
+            StartRoaming();
         }
 
         _enemyPathfinding.StopMoving();
@@ -129,6 +148,18 @@ public class EnemyAI : MonoBehaviour
     {
         yield return new WaitForSeconds(_attackCooldown);
         _canAttack = true;
+    }
+
+    private void MindlessRoaming()
+    {
+        _timeRoaming += Time.deltaTime;
+
+        _enemyPathfinding.MoveToward(_roamDirection);
+
+        if (_timeRoaming > _roamChangeDirTimer)
+        {
+            StartRoaming();
+        }
     }
 
     private void OnDrawGizmos()

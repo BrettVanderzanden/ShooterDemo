@@ -167,4 +167,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletVFX: {fileID: 4314169126838608841, guid: f3680e721699ab945842f06f8af21ecf, type: 3}
   _moveSpeed: 40
-  _damageAmount: 20
+  _damageAmount: 2
+  _knockbackThrust: 10

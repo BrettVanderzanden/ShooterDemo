@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private float _coyoteTimer;
     private bool _doubleJumpAvailable;
 
-    private Coroutine _jetpackCoroutine;
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
     private Movement _movement;

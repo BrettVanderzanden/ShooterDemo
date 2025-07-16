@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour
+public class AudioManager : Singleton<AudioManager>
 {
-    public static AudioManager Instance;
-
     [Range(0f, 3f)]
     [SerializeField] private float _masterVolume = 1f;
     [SerializeField] private SoundsCollectionSO _soundsCollectionSO;
@@ -17,11 +13,6 @@ public class AudioManager : MonoBehaviour
     private AudioSource _currentMusic;
 
     #region Unity Methods
-    private void Awake()
-    {
-        if (Instance == null) { Instance = this; }
-    }
-
     private void OnEnable()
     {
         Target.OnTargetBreak += HandleTargetBreak;

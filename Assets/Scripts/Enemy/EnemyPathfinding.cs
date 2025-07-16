@@ -7,30 +7,47 @@ public class EnemyPathfinding : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private float _facing;
     private float _moveDir;
-    private Vector2 _movePosition;
+    private Knockback _knockback;
+    private bool _canMove = true;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _knockback = GetComponent<Knockback>();
+    }
+
+    void OnEnable()
+    {
+        _knockback.OnKnockBackStart += CanMoveFalse;
+        _knockback.OnKnockBackEnd += CanMoveTrue;
+    }
+
+    void OnDisable()
+    {
+        _knockback.OnKnockBackStart -= CanMoveFalse;
+        _knockback.OnKnockBackEnd -= CanMoveTrue;
     }
 
     private void Update()
     {
         HandleSpriteFlip();
+        Move();
     }
 
-    private void FixedUpdate()
+    private void Move()
     {
-        Vector2 movePosition = _rigidBody.position;
-        movePosition.x += _moveDir * (_moveSpeed * Time.fixedDeltaTime);
-        _rigidBody.MovePosition(movePosition);
+        if (!_canMove) { return; }
+
+        Vector2 movement = new Vector2(_moveDir * _moveSpeed, _rigidBody.linearVelocityY);
+        _rigidBody.linearVelocity = movement;
     }
 
-    public void MoveTo(Vector2 targetPosition)
-    {
-        _movePosition = targetPosition;
-        _facing = targetPosition.x; // fix
-    }
+    // private void FixedUpdate()
+    // {
+    //     Vector2 movePosition = _rigidBody.position;
+    //     movePosition.x += _moveDir * (_moveSpeed * Time.fixedDeltaTime);
+    //     _rigidBody.MovePosition(movePosition);
+    // }
 
     public void MoveToward(float direction)
     {
@@ -43,10 +60,19 @@ public class EnemyPathfinding : MonoBehaviour
         _facing = direction;
     }
 
+    private void CanMoveTrue()
+    {
+        _canMove = true;
+    }
+
+    private void CanMoveFalse()
+    {
+        _canMove = false;
+    }
+
     public void StopMoving()
     {
         _moveDir = 0;
-        _movePosition = transform.position;
     }
 
     private void HandleSpriteFlip()

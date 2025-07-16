@@ -73,7 +73,7 @@ public class EnemyAI : MonoBehaviour
         {
             _state = State.Roaming;
             _roamDirection = GetRoamingDirection();
-            Debug.Log("Roaming");
+            //Debug.Log("Roaming");
         }
     }
 
@@ -91,7 +91,7 @@ public class EnemyAI : MonoBehaviour
         if (_timeRoaming > _roamChangeDirTimer)
         {
             _state = State.Idle;
-            Debug.Log("Idle");
+            //Debug.Log("Idle");
         }
     }
 
@@ -107,7 +107,7 @@ public class EnemyAI : MonoBehaviour
         if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) > _attackRange)
         {
             _state = State.Roaming;
-            Debug.Log("Roaming");
+            //Debug.Log("Roaming");
             _roamDirection = GetRoamingDirection();
         }
 
@@ -117,7 +117,7 @@ public class EnemyAI : MonoBehaviour
 
         if (_attackRange != 0 && _canAttack)
         {
-            Debug.Log("Attacking");
+            //Debug.Log("Attacking");
             _canAttack = false;
             (_enemyType as IEnemy).Attack();
 

@@ -15,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _idleTimer = 4f;
     [SerializeField] private float _roamChangeDirTimer = 1.5f;
     [SerializeField] private float _attackRange = 10f;
+    [SerializeField] private float _attackHeight = 10f;
     [SerializeField] private float _attackCooldown = 1f;
 
     private float _roamDirection;
@@ -79,7 +80,7 @@ public class EnemyAI : MonoBehaviour
     {
         _timeIdling += Time.deltaTime;
 
-        if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) < _attackRange)
+        if (CheckPlayerInAttackArea())
         {
             _state = State.Attacking;
         }
@@ -105,7 +106,7 @@ public class EnemyAI : MonoBehaviour
     {
         _timeRoaming += Time.deltaTime;
 
-        if (Vector2.Distance(transform.position, PlayerController.Instance.transform.position) < _attackRange)
+        if (CheckPlayerInAttackArea())
         {
             _state = State.Attacking;
         }
@@ -121,6 +122,15 @@ public class EnemyAI : MonoBehaviour
     private float GetRoamingDirection()
     {
         return Random.Range(-1f, 1f);
+    }
+
+    private bool CheckPlayerInAttackArea()
+    {
+        Rect attackRangeBox = new Rect(transform.position.x - _attackRange,
+                                        transform.position.y - _attackHeight,
+                                        _attackRange*2,
+                                        _attackHeight*2);
+        return attackRangeBox.Contains(PlayerController.Instance.transform.position);
     }
 
     private void Attacking()
@@ -165,6 +175,12 @@ public class EnemyAI : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _attackRange);
+        //Gizmos.DrawWireSphere(transform.position, _attackRange);
+        Vector3 attackRangeA = new Vector3(transform.position.x - _attackRange, transform.position.y);
+        Vector3 attackRangeB = new Vector3(transform.position.x + _attackRange, transform.position.y);
+        Gizmos.DrawLine(attackRangeA, attackRangeB);
+        Vector3 attackHeightA = new Vector3(transform.position.x, transform.position.y - _attackHeight);
+        Vector3 attackHeightB = new Vector3(transform.position.x, transform.position.y + _attackHeight);
+        Gizmos.DrawLine(attackHeightA, attackHeightB);
     }
 }

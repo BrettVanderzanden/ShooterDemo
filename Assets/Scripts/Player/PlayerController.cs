@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -21,6 +22,7 @@ public class PlayerController : Singleton<PlayerController>
     private float _timeInAir;
     private float _coyoteTimer;
     private bool _doubleJumpAvailable;
+    private bool _controlEnabled = true;
 
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
@@ -55,11 +57,15 @@ public class PlayerController : Singleton<PlayerController>
     private void OnEnable()
     {
         OnJump += ApplyJumpForce;
+        EndPoint.OnExitReached += DisableControl;
+        SceneManager.sceneLoaded += OnLevelLoaded;
     }
 
     private void OnDisable()
     {
         OnJump -= ApplyJumpForce;
+        EndPoint.OnExitReached -= DisableControl;
+        SceneManager.sceneLoaded -= OnLevelLoaded;
     }
 
     private void Update()
@@ -121,7 +127,14 @@ public class PlayerController : Singleton<PlayerController>
 
     private void GatherInput()
     {
-        _frameInput = _playerInput.FrameInput;
+        if (_controlEnabled)
+        {
+            _frameInput = _playerInput.FrameInput;
+        }
+        else
+        {
+            _frameInput = default;
+        }
     }
 
     private void Movement()
@@ -181,5 +194,15 @@ public class PlayerController : Singleton<PlayerController>
         {
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
+    }
+
+    private void DisableControl()
+    {
+        _controlEnabled = false;
+    }
+
+    private void OnLevelLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _controlEnabled = true;
     }
 }

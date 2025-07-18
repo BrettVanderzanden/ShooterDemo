@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
 {
@@ -13,8 +14,10 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
     [SerializeField] private float _deathLoadSceneWaitTime = 2f;
 
     private Knockback _knockback;
+    private Slider _healthSlider;
     private int _currentHealth;
     private bool _canTakeDamage = true;
+    const string HEALTH_SLIDER_NAME = "Health Bar";
 
     protected override void Awake()
     {
@@ -27,6 +30,7 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
     {
         IsDead = false;
         _currentHealth = _startingHealth;
+        UpdateHealthSlider();
     }
 
     public void TakeDamage(Vector2 damageSourceDir, int damageAmount, float knockbackThrust)
@@ -35,7 +39,9 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
 
         _canTakeDamage = false;
         _currentHealth -= damageAmount;
-        
+
+        UpdateHealthSlider();
+
         CheckAlive();
 
         if (!IsDead)
@@ -61,7 +67,7 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
             // death animation here
             OnDeath?.Invoke(this);
             GetComponent<BoxCollider2D>().enabled = false;
-        
+
             StartCoroutine(DeathLoadSceneRoutine());
         }
     }
@@ -79,5 +85,15 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
         _canTakeDamage = !IsDead;
         // stop dmg recovery fx here
         GetComponentInChildren<SpriteRenderer>().color = Color.white;
+    }
+
+    private void UpdateHealthSlider()
+    {
+        if (_healthSlider == null)
+        {
+            _healthSlider = GameObject.Find(HEALTH_SLIDER_NAME).GetComponent<Slider>(); // string references are bad
+        }
+        _healthSlider.maxValue = _startingHealth;
+        _healthSlider.value = _currentHealth;
     }
 }

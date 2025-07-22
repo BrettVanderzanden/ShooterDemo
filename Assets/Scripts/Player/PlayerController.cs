@@ -8,6 +8,7 @@ public class PlayerController : Singleton<PlayerController>
     public Vector2 MoveInput => _frameInput.Move;
 
     public static Action OnJump;
+    public static Action OnDash;
 
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
@@ -18,11 +19,13 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private float _coyoteTime = 0.1f;
     [SerializeField] private float _maxFallSpeedVelocity = -25f;
     [SerializeField] private bool _spawnAtStartPoint = true;
+    [SerializeField] private float _dashCooldown = 1f;
 
     private float _timeInAir;
     private float _coyoteTimer;
     private bool _doubleJumpAvailable;
     private bool _controlEnabled = true;
+    private float _dashTimer = 0f;
 
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
@@ -57,6 +60,7 @@ public class PlayerController : Singleton<PlayerController>
     private void OnEnable()
     {
         OnJump += ApplyJumpForce;
+        OnDash += StartDashCooldown;
         EndPoint.OnExitReached += DisableControl;
         SceneManager.sceneLoaded += OnLevelLoaded;
     }
@@ -64,6 +68,7 @@ public class PlayerController : Singleton<PlayerController>
     private void OnDisable()
     {
         OnJump -= ApplyJumpForce;
+        OnDash -= StartDashCooldown;
         EndPoint.OnExitReached -= DisableControl;
         SceneManager.sceneLoaded -= OnLevelLoaded;
     }
@@ -75,6 +80,7 @@ public class PlayerController : Singleton<PlayerController>
         _isGrounded = Physics2D.OverlapBox(_feetTransform.position, _groundCheck, 0f, _groundLayer);
         CoyoteTimer();
         HandleJump();
+        HandleDash();
         GravityDelay();
         HandleSpriteFlip();
     }
@@ -180,6 +186,25 @@ public class PlayerController : Singleton<PlayerController>
         _timeInAir = 0f;
         _coyoteTimer = 0f;
         _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
+    }
+
+    private void HandleDash()
+    {
+        if (_dashTimer > 0f)
+        {
+            _dashTimer -= Time.deltaTime;
+        }
+        if (!_frameInput.Dash) { return; }
+        if (_dashTimer <= 0f)
+        {
+            OnDash?.Invoke();
+        }
+    }
+
+    private void StartDashCooldown()
+    {
+        _dashTimer = _dashCooldown;
+
     }
 
     private void HandleSpriteFlip()

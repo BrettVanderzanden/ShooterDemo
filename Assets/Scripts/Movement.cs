@@ -6,9 +6,13 @@ public class Movement : MonoBehaviour
     public bool CanMove => _canMove;
 
     [SerializeField] private float _moveSpeed = 10f;
+    [SerializeField] private float _dashStrength = 14f;
+    [SerializeField] private float _dashDuration = .3f;
 
     private float _moveX;
     private bool _canMove = true;
+    private bool _dashing = false;
+    private float _dashingTime = 0f;
 
     private Rigidbody2D _rigidBody;
     private Knockback _knockback;
@@ -19,18 +23,32 @@ public class Movement : MonoBehaviour
         _knockback = GetComponent<Knockback>();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         _knockback.OnKnockBackStart += CanMoveFalse;
         _knockback.OnKnockBackEnd += CanMoveTrue;
         PlayerHealth.OnDeath += HandlePlayerDeath;
+        PlayerController.OnDash += ApplyDashForce;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         _knockback.OnKnockBackStart -= CanMoveFalse;
         _knockback.OnKnockBackEnd -= CanMoveTrue;
         PlayerHealth.OnDeath -= HandlePlayerDeath;
+        PlayerController.OnDash -= ApplyDashForce;
+    }
+
+    private void Update()
+    {
+        if (_dashingTime > 0f)
+        {
+            _dashingTime -= Time.deltaTime;
+        }
+        else
+        {
+            _dashing = false;
+        }
     }
 
     private void FixedUpdate()
@@ -63,7 +81,20 @@ public class Movement : MonoBehaviour
     {
         if (!_canMove) { return; }
 
+        if (!_dashing)
+        {
+
         Vector2 movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
         _rigidBody.linearVelocity = movement;
+        }
+    }
+
+    private void ApplyDashForce()
+    {
+        Vector2 dashDir = new Vector2(_rigidBody.linearVelocityX, 0f).normalized;
+        Debug.Log(dashDir);
+        _rigidBody.AddForce(dashDir * _dashStrength, ForceMode2D.Impulse);
+        _dashing = true;
+        _dashingTime = _dashDuration;
     }
 }

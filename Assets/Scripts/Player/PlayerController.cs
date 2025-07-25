@@ -13,7 +13,6 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _jumpStrength = 14f;
     [SerializeField] private float _extraGravity = 1000f;
     [SerializeField] private float _gravityDelay = 0.25f;
     [SerializeField] private float _coyoteTime = 0.1f;
@@ -59,7 +58,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnEnable()
     {
-        OnJump += ApplyJumpForce;
+        OnJump += StartJump;
         OnDash += StartDashCooldown;
         EndPoint.OnExitReached += DisableControl;
         SceneManager.sceneLoaded += OnLevelLoaded;
@@ -67,7 +66,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnDisable()
     {
-        OnJump -= ApplyJumpForce;
+        OnJump -= StartJump;
         OnDash -= StartDashCooldown;
         EndPoint.OnExitReached -= DisableControl;
         SceneManager.sceneLoaded -= OnLevelLoaded;
@@ -167,6 +166,12 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    private void StartJump()
+    {
+        _timeInAir = 0f;
+        _coyoteTimer = 0f;
+    }
+
     private void CoyoteTimer()
     {
         if (CheckGrounded())
@@ -178,14 +183,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             _coyoteTimer -= Time.deltaTime;
         }
-    }
-
-    private void ApplyJumpForce()
-    {
-        _rigidBody.linearVelocity = Vector2.zero;
-        _timeInAir = 0f;
-        _coyoteTimer = 0f;
-        _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
     private void HandleDash()
@@ -204,7 +201,6 @@ public class PlayerController : Singleton<PlayerController>
     private void StartDashCooldown()
     {
         _dashTimer = _dashCooldown;
-
     }
 
     private void HandleSpriteFlip()

@@ -7,12 +7,16 @@ public class EnemyAI : MonoBehaviour
     public EnemyAIState CurrentState => _currentState;
 
     [SerializeField] private MonoBehaviour _enemyType;
-    [SerializeField] private float _idleTimer = 4f;
-    [SerializeField] private float _roamChangeDirTimer = 1.5f;
+    [SerializeField] private float _defaultIdleDuration = 4f;
+    [SerializeField] private float _defaultRoamChangeDirTime = 1.5f;
+    [SerializeField] private float _idleStateVariationLimit = 2f;
+    [SerializeField] private float _minIdleStateDuration = 0.3f;
     [SerializeField] private float _attackCooldown = 1f;
 
     private float _roamDirection;
+    private float _roamTimeLimit;
     private float _timeRoaming = 0f;
+    private float _idleTimeLimit;
     private float _timeIdling = 0f;
     private bool _canAttack = true;
     private float _attackRange = 10f;
@@ -27,12 +31,13 @@ public class EnemyAI : MonoBehaviour
         _aggroDetection = GetComponentInChildren<BoxCollider2D>();
         _enemyPathfinding = GetComponent<EnemyPathfinding>();
         _animations = GetComponent<EnemyAnimations>();
-        _currentState = EnemyAIState.Roaming;
+
         _attackRange = _aggroDetection.size.x;
     }
 
     private void Start()
     {
+        StartIdle();
         GetRoamingDirection();
     }
 
@@ -88,6 +93,7 @@ public class EnemyAI : MonoBehaviour
     {
         _timeIdling = 0f;
         _timeRoaming = 0f;
+        _idleTimeLimit = Mathf.Max(_defaultIdleDuration + Random.Range(-_idleStateVariationLimit, _idleStateVariationLimit), _minIdleStateDuration);
         _currentState = EnemyAIState.Idle;
         _animations.Idle();
     }
@@ -98,7 +104,7 @@ public class EnemyAI : MonoBehaviour
 
         _enemyPathfinding.StopMoving();
 
-        if (_timeIdling > _idleTimer)
+        if (_timeIdling > _idleTimeLimit)
         {
             StartRoaming();
         }
@@ -109,6 +115,7 @@ public class EnemyAI : MonoBehaviour
         _currentState = EnemyAIState.Roaming;
         _timeIdling = 0f;
         _timeRoaming = 0f;
+        _roamTimeLimit = Mathf.Max(_defaultRoamChangeDirTime + Random.Range(-_idleStateVariationLimit, _idleStateVariationLimit), _minIdleStateDuration);
         _roamDirection = GetRoamingDirection();
         _animations.Roam();
     }
@@ -119,7 +126,7 @@ public class EnemyAI : MonoBehaviour
 
         _enemyPathfinding.MoveToward(_roamDirection);
 
-        if (_timeRoaming > _roamChangeDirTimer)
+        if (_timeRoaming > _roamTimeLimit)
         {
             StartIdle();
         }
@@ -168,7 +175,7 @@ public class EnemyAI : MonoBehaviour
 
         _enemyPathfinding.MoveToward(_roamDirection);
 
-        if (_timeRoaming > _roamChangeDirTimer)
+        if (_timeRoaming > _defaultRoamChangeDirTime)
         {
             StartRoaming();
         }
@@ -184,6 +191,8 @@ public enum EnemyAIState
 {
     Idle,
     Roaming,
+    Aggro,
+    ReadyingAttack,
     Attacking,
     Hurt,
 }

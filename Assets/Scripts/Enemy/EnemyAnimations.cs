@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class EnemyAnimations : MonoBehaviour
 {
-    [SerializeField] private float _attackDuration = 1f;
+    private static readonly int IDLE_HASH = Animator.StringToHash("Idle");
+    private static readonly int WALK_HASH = Animator.StringToHash("Walk");
+    private static readonly int ATTACK_HASH = Animator.StringToHash("Attack");
 
     Animator _animator;
 
@@ -14,22 +16,16 @@ public class EnemyAnimations : MonoBehaviour
 
     public void Idle()
     {
-        _animator.SetBool("isIdle", true);
-        _animator.SetBool("isMoving", false);
-        _animator.SetBool("isAttacking", false);
+        _animator.Play(IDLE_HASH, 0, 0f);
     }
 
     public void Roam()
     {
-        _animator.SetBool("isIdle", false);
-        _animator.SetBool("isMoving", true);
-        _animator.SetBool("isAttacking", false);
+        _animator.Play(WALK_HASH, 0, 0f);
     }
 
     public void Attack()
     {
-        _animator.SetBool("isIdle", false);
-        _animator.SetBool("isMoving", false);
-        _animator.SetBool("isAttacking", true);
+        _animator.Play(ATTACK_HASH, 0, 0f);
     }
 }

@@ -586,6 +586,8 @@ MonoBehaviour:
   _gravityDelay: 0.25
   _coyoteTime: 0.1
   _maxFallSpeedVelocity: -40
+  _spawnAtStartPoint: 1
+  _dashCooldown: 1
 --- !u!114 &1834032242073717515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,6 +601,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
+  _jumpStrength: 14
+  _dashStrength: 14
+  _dashDuration: 0.3
 --- !u!114 &2084083494325077376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingHealth: 100
-  _damageRecoveryTime: 1
+  _damageRecoveryTime: 0.5
   _deathLoadSceneWaitTime: 2
 --- !u!1 &8529383528688140698
 GameObject:

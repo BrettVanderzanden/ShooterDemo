@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public bool CanMove => _canMove;
 
     [SerializeField] private float _moveSpeed = 10f;
+    [SerializeField] private float _jumpStrength = 14f;
     [SerializeField] private float _dashStrength = 14f;
     [SerializeField] private float _dashDuration = .3f;
 
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         _knockback.OnKnockBackStart += CanMoveFalse;
         _knockback.OnKnockBackEnd += CanMoveTrue;
         PlayerHealth.OnDeath += HandlePlayerDeath;
+        PlayerController.OnJump += ApplyJumpForce;
         PlayerController.OnDash += ApplyDashForce;
     }
 
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         _knockback.OnKnockBackStart -= CanMoveFalse;
         _knockback.OnKnockBackEnd -= CanMoveTrue;
         PlayerHealth.OnDeath -= HandlePlayerDeath;
+        PlayerController.OnJump -= ApplyJumpForce;
         PlayerController.OnDash -= ApplyDashForce;
     }
 
@@ -87,6 +90,12 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
         _rigidBody.linearVelocity = movement;
         }
+    }
+
+    private void ApplyJumpForce()
+    {
+        _rigidBody.linearVelocity = Vector2.zero;
+        _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
     private void ApplyDashForce()

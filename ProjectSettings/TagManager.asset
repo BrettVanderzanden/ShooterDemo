@@ -15,9 +15,9 @@ TagManager:
   - Enemy
   - Ground
   - Background
-  - 
-  - 
-  - 
+  - Aggro
+  - Player Attack
+  - Enemy Attack
   - 
   - 
   - 

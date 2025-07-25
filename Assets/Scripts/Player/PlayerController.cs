@@ -29,7 +29,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
-    private Movement _movement;
+    private PlayerMovement _movement;
     private Rigidbody2D _rigidBody;
     private Collider2D _isGrounded;
     private Vector3 _defaultScenePlacement;
@@ -40,7 +40,7 @@ public class PlayerController : Singleton<PlayerController>
 
         _rigidBody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
-        _movement = GetComponent<Movement>();
+        _movement = GetComponent<PlayerMovement>();
         _defaultScenePlacement = transform.position;
     }
 

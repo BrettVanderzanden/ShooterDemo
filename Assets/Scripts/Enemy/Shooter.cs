@@ -11,7 +11,11 @@ public class Shooter : MonoBehaviour, IEnemy
     private void Start()
     {
         CreateBulletPool();
-        // Destroy remaining bullets/pool on death
+    }
+
+    private void OnDestroy()
+    {
+        _bulletPool.Clear();
     }
 
     private void CreateBulletPool()
@@ -43,8 +47,5 @@ public class Shooter : MonoBehaviour, IEnemy
 
         Bullet newBullet = _bulletPool.Get();
         newBullet.Init(this, _bulletSpawnPoint.position, targetDir);
-
-        //GameObject newBullet = Instantiate(_bulletPrefab, _bulletSpawnPoint.position, Quaternion.identity);
-        //newBullet.transform.right = targetDir;
     }
 }

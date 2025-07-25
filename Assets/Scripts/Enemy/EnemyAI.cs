@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    private enum State
-    {
-        Idle,
-        Roaming,
-        Attacking
-    }
+    public EnemyAIState CurrentState => _currentState;
 
     [SerializeField] private MonoBehaviour _enemyType;
     [SerializeField] private float _idleTimer = 4f;
     [SerializeField] private float _roamChangeDirTimer = 1.5f;
-    [SerializeField] private float _attackRange = 10f;
-    [SerializeField] private float _attackHeight = 10f;
     [SerializeField] private float _attackCooldown = 1f;
 
     private float _roamDirection;
     private float _timeRoaming = 0f;
     private float _timeIdling = 0f;
     private bool _canAttack = true;
+    private float _attackRange = 10f;
 
-    private State _state;
+    private EnemyAIState _currentState;
+    private BoxCollider2D _aggroDetection;
     private EnemyPathfinding _enemyPathfinding;
+    private EnemyAnimations _animations;
 
     private void Awake()
     {
+        _aggroDetection = GetComponentInChildren<BoxCollider2D>();
         _enemyPathfinding = GetComponent<EnemyPathfinding>();
-        _state = State.Roaming;
+        _animations = GetComponent<EnemyAnimations>();
+        _currentState = EnemyAIState.Roaming;
+        _attackRange = _aggroDetection.size.x;
     }
 
     private void Start()
@@ -46,15 +45,15 @@ public class EnemyAI : MonoBehaviour
     {
         if (PlayerController.Instance)
         {
-            switch (_state)
+            switch (_currentState)
             {
-                case State.Idle:
+                case EnemyAIState.Idle:
                     Idle();
                     break;
-                case State.Roaming:
+                case EnemyAIState.Roaming:
                     Roaming();
                     break;
-                case State.Attacking:
+                case EnemyAIState.Attacking:
                     Attacking();
                     break;
                 default:
@@ -65,25 +64,37 @@ public class EnemyAI : MonoBehaviour
         {
             MindlessRoaming();
         }
-        
+    }
+
+    private void TransitionTo(EnemyAIState _nextState)
+    {
+        switch (_nextState)
+        {
+            case EnemyAIState.Idle:
+                StartIdle();
+                break;
+            case EnemyAIState.Roaming:
+                StartRoaming();
+                break;
+            case EnemyAIState.Attacking:
+                StartAttacking();
+                break;
+            default:
+                break;
+        }
     }
 
     private void StartIdle()
     {
-        //Debug.Log("Idle");
         _timeIdling = 0f;
         _timeRoaming = 0f;
-        _state = State.Idle;
+        _currentState = EnemyAIState.Idle;
+        _animations.Idle();
     }
 
     private void Idle()
     {
         _timeIdling += Time.deltaTime;
-
-        if (CheckPlayerInAttackArea())
-        {
-            _state = State.Attacking;
-        }
 
         _enemyPathfinding.StopMoving();
 
@@ -95,21 +106,16 @@ public class EnemyAI : MonoBehaviour
 
     private void StartRoaming()
     {
-        //Debug.Log("Roaming");
-        _state = State.Roaming;
+        _currentState = EnemyAIState.Roaming;
         _timeIdling = 0f;
         _timeRoaming = 0f;
         _roamDirection = GetRoamingDirection();
+        _animations.Roam();
     }
 
     private void Roaming()
     {
         _timeRoaming += Time.deltaTime;
-
-        if (CheckPlayerInAttackArea())
-        {
-            _state = State.Attacking;
-        }
 
         _enemyPathfinding.MoveToward(_roamDirection);
 
@@ -124,13 +130,9 @@ public class EnemyAI : MonoBehaviour
         return Random.Range(-1f, 1f);
     }
 
-    private bool CheckPlayerInAttackArea()
+    private void StartAttacking()
     {
-        Rect attackRangeBox = new Rect(transform.position.x - _attackRange,
-                                        transform.position.y - _attackHeight,
-                                        _attackRange*2,
-                                        _attackHeight*2);
-        return attackRangeBox.Contains(PlayerController.Instance.transform.position);
+        _currentState = EnemyAIState.Attacking;
     }
 
     private void Attacking()
@@ -146,9 +148,9 @@ public class EnemyAI : MonoBehaviour
 
         if (_attackRange != 0 && _canAttack)
         {
-            //Debug.Log("Attacking");
             _canAttack = false;
             (_enemyType as IEnemy).Attack();
+            _animations.Attack();
 
             StartCoroutine(AttackCooldownRoutine());
         }
@@ -172,15 +174,16 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, _attackRange);
-        Vector3 attackRangeA = new Vector3(transform.position.x - _attackRange, transform.position.y);
-        Vector3 attackRangeB = new Vector3(transform.position.x + _attackRange, transform.position.y);
-        Gizmos.DrawLine(attackRangeA, attackRangeB);
-        Vector3 attackHeightA = new Vector3(transform.position.x, transform.position.y - _attackHeight);
-        Vector3 attackHeightB = new Vector3(transform.position.x, transform.position.y + _attackHeight);
-        Gizmos.DrawLine(attackHeightA, attackHeightB);
+        TransitionTo(EnemyAIState.Attacking);
     }
+}
+
+public enum EnemyAIState
+{
+    Idle,
+    Roaming,
+    Attacking,
+    Hurt,
 }

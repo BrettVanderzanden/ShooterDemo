@@ -42,13 +42,6 @@ public class EnemyPathfinding : MonoBehaviour
         _rigidBody.linearVelocity = movement;
     }
 
-    // private void FixedUpdate()
-    // {
-    //     Vector2 movePosition = _rigidBody.position;
-    //     movePosition.x += _moveDir * (_moveSpeed * Time.fixedDeltaTime);
-    //     _rigidBody.MovePosition(movePosition);
-    // }
-
     public void MoveToward(float direction)
     {
         _moveDir = direction;

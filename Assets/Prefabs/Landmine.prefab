@@ -182,5 +182,5 @@ MonoBehaviour:
   _damageAmount: 100
   _knockbackThrust: 10
   _damageRadius: 2.5
-  _detonationDelay: 0.6
+  _detonationDelay: 0.4
   _explosionVFX: {fileID: 0}

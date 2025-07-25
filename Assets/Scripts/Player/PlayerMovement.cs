@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public bool CanMove => _canMove;
 

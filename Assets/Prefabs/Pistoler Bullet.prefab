@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5533770670797806923, guid: ac336c7d505c9f441bf8b25002114715, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8696355416379102987, guid: ac336c7d505c9f441bf8b25002114715, type: 3}
       propertyPath: _damageAmount

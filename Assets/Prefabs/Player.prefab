@@ -581,9 +581,8 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  _jumpStrength: 14
-  _extraGravity: 3000
-  _gravityDelay: 0.25
+  _extraGravity: 5000
+  _gravityDelay: 0.2
   _coyoteTime: 0.1
   _maxFallSpeedVelocity: -40
   _spawnAtStartPoint: 1

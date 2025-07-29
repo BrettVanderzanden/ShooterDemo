@@ -15597,14 +15597,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8276531168662363181, guid: 501be17b302491a4b989f40ca86a1079, type: 3}
-      propertyPath: _extraGravity
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8276531168662363181, guid: 501be17b302491a4b989f40ca86a1079, type: 3}
-      propertyPath: _gravityDelay
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

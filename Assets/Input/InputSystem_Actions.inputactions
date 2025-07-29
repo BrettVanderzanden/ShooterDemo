@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TNT",
+                    "type": "Button",
+                    "id": "b7501f3d-e16d-446e-8679-5b52d159dea6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -276,23 +285,23 @@
                 },
                 {
                     "name": "",
-                    "id": "02601b94-5ee9-4c22-b24d-ce4214c46751",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a31b4f37-0f1b-4c3f-90f5-6d6cc39746ac",
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8901ce1-ccba-4bf6-95bb-4ca2e1e98be1",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TNT",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

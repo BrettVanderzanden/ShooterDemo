@@ -8,11 +8,15 @@ using UnityEngine.InputSystem;
 public class Gun : MonoBehaviour
 {
     public static Action OnShoot;
+    public static Action OnTNTThrow;
 
     [Header("Bullet")]
     [SerializeField] private Transform _bulletSpawnPoint;
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private float _gunFireCD = 0.5f;
+
+    [Header("Dynamite")]
+    [SerializeField] private Dynamite _dynamitePrefab;
 
     private ObjectPool<Bullet> _bulletPool;
 
@@ -48,6 +52,7 @@ public class Gun : MonoBehaviour
         OnShoot += ShootProjectile;
         OnShoot += ResetLastFireTime;
         OnShoot += FireAnimation;
+        OnTNTThrow += ThrowTNT;
     }
 
     private void OnDisable()
@@ -55,6 +60,7 @@ public class Gun : MonoBehaviour
         OnShoot -= ShootProjectile;
         OnShoot -= ResetLastFireTime;
         OnShoot -= FireAnimation;
+        OnTNTThrow -= ThrowTNT;
     }
 
     private void GatherInput()
@@ -96,6 +102,12 @@ public class Gun : MonoBehaviour
     {
         Bullet newBullet = _bulletPool.Get();
         newBullet.Init(this, _bulletSpawnPoint.position, _mousePos);
+    }
+
+    private void ThrowTNT()
+    {
+        Dynamite newTNT = Instantiate(_dynamitePrefab, _bulletSpawnPoint.position, Quaternion.identity);
+        newTNT.Init(_bulletSpawnPoint.position, _mousePos);
     }
 
     private void FireAnimation()

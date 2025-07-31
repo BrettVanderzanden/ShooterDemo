@@ -695,6 +695,7 @@ MonoBehaviour:
   _bulletSpawnPoint: {fileID: 2078230713373596090}
   _bulletPrefab: {fileID: 8696355416379102987, guid: ac336c7d505c9f441bf8b25002114715, type: 3}
   _gunFireCD: 0.1
+  _dynamitePrefab: {fileID: 1667796442381628257, guid: d02382e8f41925045bc86c00ec3013e6, type: 3}
 --- !u!95 &2070343083384390713
 Animator:
   serializedVersion: 7

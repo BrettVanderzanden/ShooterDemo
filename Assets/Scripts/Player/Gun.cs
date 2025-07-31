@@ -22,11 +22,14 @@ public class Gun : MonoBehaviour
 
     private Vector2 _mousePos;
     private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
+    private static readonly int THROW_TNT_HASH = Animator.StringToHash("Throw TNT");
     private float _lastFireTime = 0f;
+    private bool _tntIsActive = false;
 
     private Animator _animator;
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
+    private Dynamite _activeTNT;
 
     private void Awake()
     {
@@ -53,6 +56,7 @@ public class Gun : MonoBehaviour
         OnShoot += ResetLastFireTime;
         OnShoot += FireAnimation;
         OnTNTThrow += ThrowTNT;
+        OnTNTThrow += ThrowTNTAnimation;
     }
 
     private void OnDisable()
@@ -61,6 +65,7 @@ public class Gun : MonoBehaviour
         OnShoot -= ResetLastFireTime;
         OnShoot -= FireAnimation;
         OnTNTThrow -= ThrowTNT;
+        OnTNTThrow -= ThrowTNTAnimation;
     }
 
     private void GatherInput()
@@ -96,6 +101,20 @@ public class Gun : MonoBehaviour
         {
             OnShoot?.Invoke();
         }
+
+        if (_frameInput.TNT)// && Time.time >= _lastFireTime)
+        {
+            if (!_tntIsActive)
+            {
+                _tntIsActive = true;
+                OnTNTThrow?.Invoke();
+            }
+            else
+            {
+                _tntIsActive = false;
+                _activeTNT.TriggerDetonation();
+            }
+        }
     }
 
     private void ShootProjectile()
@@ -108,11 +127,17 @@ public class Gun : MonoBehaviour
     {
         Dynamite newTNT = Instantiate(_dynamitePrefab, _bulletSpawnPoint.position, Quaternion.identity);
         newTNT.Init(_bulletSpawnPoint.position, _mousePos);
+        _activeTNT = newTNT;
     }
 
     private void FireAnimation()
     {
         _animator.Play(FIRE_HASH, 0, 0f);
+    }
+
+    private void ThrowTNTAnimation()
+    {
+        _animator.Play(THROW_TNT_HASH, 0, 0f);
     }
 
     private void ResetLastFireTime()

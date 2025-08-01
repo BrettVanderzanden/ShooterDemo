@@ -1,16 +1,19 @@
 using System;
 using UnityEngine;
 
-public class Dynamite : MonoBehaviour
+public class TNT : MonoBehaviour
 {
-    public Action OnDynamiteExplode;
+    public Action OnTNTExplode;
 
     [SerializeField] private float _launchForce = 6f;
-    [SerializeField] private float _knockbackThrust = 10f;
+    [SerializeField] private float _enemyKnockbackThrust = 10f;
+    [SerializeField] private float _playerKnockbackThrust = 30f;
     [SerializeField] private int _damageAmount = 3;
     [SerializeField] private float _damageRadius = 4f;
+    [SerializeField] private float _knockbackRadius = 6f;
     [SerializeField] private float _initialSpinTorque = 3f;
     [SerializeField] private GameObject _explosionVFX;
+    [SerializeField] private GameObject _knockbackAreaVFX;
 
     private Rigidbody2D _rigidBody;
 
@@ -21,12 +24,12 @@ public class Dynamite : MonoBehaviour
 
     private void OnEnable()
     {
-        OnDynamiteExplode += Explode;
+        OnTNTExplode += Explode;
     }
 
     private void OnDisable()
     {
-        OnDynamiteExplode -= Explode;
+        OnTNTExplode -= Explode;
     }
 
     public void Init(Vector2 tntSpawnPos, Vector2 mousePos)
@@ -41,16 +44,19 @@ public class Dynamite : MonoBehaviour
     {
         // Stop moving/rotating
         _rigidBody.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        // attach to enemy?
     }
 
     public void TriggerDetonation()
     {
-        OnDynamiteExplode?.Invoke();
+        OnTNTExplode?.Invoke();
     }
 
     private void Explode()
     {
         DamageNearby();
+        KnockbackNearby();
         PlayExplosionVFX();
         Destroy(gameObject);
     }
@@ -65,13 +71,46 @@ public class Dynamite : MonoBehaviour
             iHittable?.TakeHit();
 
             IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
-            iDamageable?.TakeDamage(transform.position, _damageAmount, _knockbackThrust);
+            iDamageable?.TakeDamage(_damageAmount);
+        }
+    }
+
+    private void KnockbackNearby()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _knockbackRadius);
+
+        foreach (var hit in hits)
+        {
+            IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
+            float knockback;
+
+            PlayerController pc = hit.gameObject.GetComponent<PlayerController>();
+            if (pc)
+            {
+                pc.StartTNTKnockback();
+                knockback = _playerKnockbackThrust;
+            }
+            else
+            {
+                knockback = _enemyKnockbackThrust;
+            }
+            iDamageable?.TakeKnockback(transform.position, knockback);
         }
     }
 
     private void PlayExplosionVFX()
     {
         Instantiate(_explosionVFX, transform.position, Quaternion.identity);
+        Instantiate(_knockbackAreaVFX, transform.position, Quaternion.identity);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _damageRadius);
+
+        Gizmos.color = Color.softBlue;
+        Gizmos.DrawWireSphere(transform.position, _knockbackRadius);
     }
 
 }

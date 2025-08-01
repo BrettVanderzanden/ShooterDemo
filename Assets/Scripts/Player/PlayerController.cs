@@ -226,4 +226,9 @@ public class PlayerController : Singleton<PlayerController>
     {
         _controlEnabled = true;
     }
+
+    public void StartTNTKnockback()
+    {
+        StartJump();
+    }
 }

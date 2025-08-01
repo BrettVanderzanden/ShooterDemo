@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1656175597818604065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -0.232, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -671,15 +671,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8529383528688140698}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.78, y: 0.3, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.0033094324, w: 0.9999946}
+  m_LocalPosition: {x: 0.78, y: 0.531, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2078230713373596090}
   - {fileID: 8085394063162521243}
   m_Father: {fileID: 4462232796565744834}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.379}
 --- !u!114 &2956895876675167282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -695,7 +695,8 @@ MonoBehaviour:
   _bulletSpawnPoint: {fileID: 2078230713373596090}
   _bulletPrefab: {fileID: 8696355416379102987, guid: ac336c7d505c9f441bf8b25002114715, type: 3}
   _gunFireCD: 0.1
-  _dynamitePrefab: {fileID: 1667796442381628257, guid: d02382e8f41925045bc86c00ec3013e6, type: 3}
+  _tntPrefab: {fileID: 1667796442381628257, guid: d02382e8f41925045bc86c00ec3013e6, type: 3}
+  _tntThrowCD: 2
 --- !u!95 &2070343083384390713
 Animator:
   serializedVersion: 7
@@ -743,7 +744,7 @@ Transform:
   m_GameObject: {fileID: 8960990745857411427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.55, y: 0.22, z: 0}
+  m_LocalPosition: {x: 0.01, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

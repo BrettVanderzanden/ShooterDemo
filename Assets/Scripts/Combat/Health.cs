@@ -25,7 +25,7 @@ public class Health : MonoBehaviour, IDamageable
         _currentHealth = _startingHealth;
     }
 
-    private void TakeDamage(int dmg)
+    public void TakeDamage(int dmg)
     {
         _currentHealth -= dmg;
 
@@ -36,9 +36,8 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
-    public void TakeDamage(Vector2 damageSourceDir, int damageAmount, float knockbackThrust)
+    public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust)
     {
-        TakeDamage(damageAmount);
         _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);
     }
 

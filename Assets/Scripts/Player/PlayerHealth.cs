@@ -33,23 +33,34 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
         UpdateHealthSlider();
     }
 
-    public void TakeDamage(Vector2 damageSourceDir, int damageAmount, float knockbackThrust)
+    public void TakeDamage(int damageAmount)
     {
-        if (!_canTakeDamage) { return; }
+        if (!_canTakeDamage && damageAmount > 0) { return; }
 
-        _canTakeDamage = false;
+        if (damageAmount > 0)
+        {
+            _canTakeDamage = false;
+        }
         _currentHealth -= damageAmount;
 
         UpdateHealthSlider();
 
         CheckAlive();
 
-        if (!IsDead)
+        if (!IsDead && damageAmount > 0)
         {
-            _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);
             // dmg recovery fx here
             GetComponentInChildren<SpriteRenderer>().color = Color.blue;
             StartCoroutine(DamageRecoveryRoutine());
+        }
+    }
+
+    public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust)
+    {
+        if (knockbackThrust > 0f)
+        {
+            Debug.Log("Knockback thrust: " + knockbackThrust);
+            _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);
         }
     }
 

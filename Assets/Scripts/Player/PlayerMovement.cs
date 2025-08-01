@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnEnable()
     {
-        _knockback.OnKnockBackStart += CanMoveFalse;
-        _knockback.OnKnockBackEnd += CanMoveTrue;
+        _knockback.OnKnockBackStart += KnockbackStart;
+        _knockback.OnKnockBackEnd += KnockbackEnd;
         PlayerHealth.OnDeath += HandlePlayerDeath;
         PlayerController.OnJump += ApplyJumpForce;
         PlayerController.OnDash += ApplyDashForce;
@@ -35,8 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        _knockback.OnKnockBackStart -= CanMoveFalse;
-        _knockback.OnKnockBackEnd -= CanMoveTrue;
+        _knockback.OnKnockBackStart -= KnockbackStart;
+        _knockback.OnKnockBackEnd -= KnockbackEnd;
         PlayerHealth.OnDeath -= HandlePlayerDeath;
         PlayerController.OnJump -= ApplyJumpForce;
         PlayerController.OnDash -= ApplyDashForce;
@@ -64,20 +64,11 @@ public class PlayerMovement : MonoBehaviour
         _moveX = currentDirection;
     }
 
-    private void CanMoveTrue()
-    {
-        _canMove = true;
-    }
-
-    private void CanMoveFalse()
-    {
-        _canMove = false;
-    }
-
     private void HandlePlayerDeath(PlayerHealth health)
     {
         _canMove = false;
-        _rigidBody.linearVelocity = Vector2.zero;
+        _rigidBody.constraints = RigidbodyConstraints2D.None;
+        //_rigidBody.linearVelocity = Vector2.zero;
     }
 
     private void Move()
@@ -86,9 +77,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (!_dashing)
         {
-
-        Vector2 movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
-        _rigidBody.linearVelocity = movement;
+            Vector2 movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
+            _rigidBody.linearVelocity = movement;
         }
     }
 
@@ -105,5 +95,17 @@ public class PlayerMovement : MonoBehaviour
         _rigidBody.AddForce(dashDir * _dashStrength, ForceMode2D.Impulse);
         _dashing = true;
         _dashingTime = _dashDuration;
+    }
+
+    private void KnockbackStart()
+    {
+        Debug.Log("Knockback Start");
+        _canMove = false;
+    }
+
+    private void KnockbackEnd()
+    {
+        Debug.Log("Knockback End");
+        _canMove = true;
     }
 }

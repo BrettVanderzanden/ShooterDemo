@@ -64,7 +64,8 @@ public class Landmine : MonoBehaviour, IHittable
             iHittable?.TakeHit();
 
             IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
-            iDamageable?.TakeDamage(transform.position, _damageAmount, _knockbackThrust);
+            iDamageable?.TakeDamage( _damageAmount);
+            iDamageable?.TakeKnockback(transform.position, _knockbackThrust);
         }
     }
 

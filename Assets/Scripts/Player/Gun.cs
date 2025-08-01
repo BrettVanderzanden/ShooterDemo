@@ -15,21 +15,23 @@ public class Gun : MonoBehaviour
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private float _gunFireCD = 0.5f;
 
-    [Header("Dynamite")]
-    [SerializeField] private Dynamite _dynamitePrefab;
+    [Header("TNT")]
+    [SerializeField] private TNT _tntPrefab;
+    [SerializeField] private float _tntThrowCD = 2f;
 
     private ObjectPool<Bullet> _bulletPool;
 
-    private Vector2 _mousePos;
+    private Vector3 _mousePos;
     private static readonly int FIRE_HASH = Animator.StringToHash("Fire");
     private static readonly int THROW_TNT_HASH = Animator.StringToHash("Throw TNT");
     private float _lastFireTime = 0f;
     private bool _tntIsActive = false;
+    private float _lastTNTTime = 0f;
 
     private Animator _animator;
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
-    private Dynamite _activeTNT;
+    private TNT _activeTNT;
 
     private void Awake()
     {
@@ -102,17 +104,21 @@ public class Gun : MonoBehaviour
             OnShoot?.Invoke();
         }
 
-        if (_frameInput.TNT)// && Time.time >= _lastFireTime)
+        if (_frameInput.TNT)
         {
             if (!_tntIsActive)
             {
-                _tntIsActive = true;
-                OnTNTThrow?.Invoke();
+                if (Time.time >= _lastTNTTime)
+                {
+                    _tntIsActive = true;
+                    OnTNTThrow?.Invoke();
+                }
             }
             else
             {
                 _tntIsActive = false;
                 _activeTNT.TriggerDetonation();
+                _lastTNTTime = Time.time + _tntThrowCD;
             }
         }
     }
@@ -125,7 +131,7 @@ public class Gun : MonoBehaviour
 
     private void ThrowTNT()
     {
-        Dynamite newTNT = Instantiate(_dynamitePrefab, _bulletSpawnPoint.position, Quaternion.identity);
+        TNT newTNT = Instantiate(_tntPrefab, _bulletSpawnPoint.position, Quaternion.identity);
         newTNT.Init(_bulletSpawnPoint.position, _mousePos);
         _activeTNT = newTNT;
     }
@@ -148,8 +154,14 @@ public class Gun : MonoBehaviour
     private void RotateGun()
     {
         _mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 direction = PlayerController.Instance.transform.InverseTransformPoint(_mousePos);
+        Vector3 direction = _mousePos - transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.localRotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.limeGreen;
+        Gizmos.DrawWireSphere(transform.position, 0.1f);
     }
 }

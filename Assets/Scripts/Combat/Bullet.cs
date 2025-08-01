@@ -46,7 +46,8 @@ public class Bullet : MonoBehaviour
         iHittable?.TakeHit();
 
         IDamageable iDamageable = other.gameObject.GetComponent<IDamageable>();
-        iDamageable?.TakeDamage(transform.position, _damageAmount, _knockbackThrust);
+        iDamageable?.TakeDamage(_damageAmount);
+        iDamageable?.TakeKnockback(transform.position, _knockbackThrust);
 
         if (_gun != null)
         {

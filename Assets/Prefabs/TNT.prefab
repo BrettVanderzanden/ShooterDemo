@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3147194374134935108}
   - component: {fileID: 7768777399348122050}
   m_Layer: 11
-  m_Name: Dynamite
+  m_Name: TNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,12 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edce966f6e6dde54591316da03e08822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _launchForce: 6
-  _knockbackThrust: 10
-  _damageAmount: 3
-  _damageRadius: 4
+  _launchForce: 10
+  _enemyKnockbackThrust: 10
+  _playerKnockbackThrust: 50
+  _damageAmount: 2
+  _damageRadius: 2.02
+  _knockbackRadius: 4.74
   _initialSpinTorque: 3
-  _explosionVFX: {fileID: 646720405206550259, guid: e16b4fe240ae9d8478c0b74632032472, type: 3}
+  _explosionVFX: {fileID: 646720405206550259, guid: efdc5df101ea353469fc19eccff2e9b9, type: 3}
+  _knockbackAreaVFX: {fileID: 646720405206550259, guid: 9e602d7b9f1f3194cbde665d33ee28ea, type: 3}
 --- !u!50 &3147194374134935108
 Rigidbody2D:
   serializedVersion: 5

@@ -1074,11 +1074,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2114129861055718610, guid: 3fecae6f7f5cfaa49932632d60e4d6e1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.63
+      value: 9.03
       objectReference: {fileID: 0}
     - target: {fileID: 2114129861055718610, guid: 3fecae6f7f5cfaa49932632d60e4d6e1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31.68
+      value: 31.59
       objectReference: {fileID: 0}
     - target: {fileID: 2114129861055718610, guid: 3fecae6f7f5cfaa49932632d60e4d6e1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1118,7 +1118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4342409412752451119, guid: 3fecae6f7f5cfaa49932632d60e4d6e1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1498,7 +1498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &798475917
 Transform:
   m_ObjectHideFlags: 0
@@ -4476,8 +4476,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basher
       objectReference: {fileID: 0}
-    - target: {fileID: 9097606226968613542, guid: b9434e3f3c1af954ab163929fb5ff1d0, type: 3}
-      propertyPath: m_Enabled
+    - target: {fileID: 7709862089907586645, guid: b9434e3f3c1af954ab163929fb5ff1d0, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

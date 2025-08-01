@@ -19,7 +19,7 @@ public class EnemyAnimations : MonoBehaviour
         _animator.Play(IDLE_HASH, 0, 0f);
     }
 
-    public void Roam()
+    public void Walk()
     {
         _animator.Play(WALK_HASH, 0, 0f);
     }

@@ -60,8 +60,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _aggroRange
+      value: 15.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _attackRange
-      value: 14.21
+      value: 14.7
       objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _attackHeight

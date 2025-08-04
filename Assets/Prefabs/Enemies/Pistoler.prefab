@@ -39,6 +39,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 14949344919044638, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _runSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 14949344919044638, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _feetTransform
+      value: 
+      objectReference: {fileID: 4755802567815032921}
+    - target: {fileID: 14949344919044638, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _groundCheck.x
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 14949344919044638, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _groundCheck.y
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 482722234227727976, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: m_Offset.y
       value: -0.24
@@ -71,6 +87,14 @@ PrefabInstance:
       propertyPath: _attackHeight
       value: 2.01
       objectReference: {fileID: 0}
+    - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _maxRoamingDistance
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _minRoamingDistance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2495753640986320490, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -79,6 +103,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 9b7d60ef5e66cb54389e4ff89e74d219, type: 2}
+    - target: {fileID: 3535621072926057573, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 3535621072926057573, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.498
+      objectReference: {fileID: 0}
     - target: {fileID: 5071014064180653872, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _attackDuration
       value: 0.8
@@ -87,6 +119,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pistoler
       objectReference: {fileID: 0}
+    - target: {fileID: 6091680828553187676, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 791cf43177a50624c8ea421f71676516, type: 2}
     - target: {fileID: 6355027596973424530, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -182,3 +218,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 804261947894712080, guid: 9148b7c26114dad4e92e5fcea331945d, type: 3}
   _bulletSpawnPoint: {fileID: 1155521931898371529}
+--- !u!4 &4755802567815032921 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3535621072926057573, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+  m_PrefabInstance: {fileID: 8291423364789425212}
+  m_PrefabAsset: {fileID: 0}

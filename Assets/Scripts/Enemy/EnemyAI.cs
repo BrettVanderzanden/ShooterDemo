@@ -8,7 +8,6 @@ public class EnemyAI : MonoBehaviour
 
     [SerializeField] private MonoBehaviour _enemyType;
     [SerializeField] private float _defaultIdleDuration = 4f;
-    [SerializeField] private float _defaultRoamChangeDirTime = 1.5f;
     [SerializeField] private float _idleStateVariationLimit = 2f;
     [SerializeField] private float _minIdleStateDuration = 0.3f;
     [SerializeField] private float _attackCooldown = 1f;
@@ -16,32 +15,31 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _aggroRange = 10f;
     [SerializeField] private float _aggroPauseDuration = 1f;
     [SerializeField] private float _aggroCooldown = 4f; // aggro should probably be reworked...
+    [SerializeField] private float _minRoamingDistance = 4f;
+    [SerializeField] private float _maxRoamingDistance = 10f;
+    [SerializeField] private float _roamCloseEnough = 0.2f;
+    [SerializeField] private float _roamTimeLimit = 6f;
 
     private float _timeInCurrentState = 0f;
-    private float _roamDirection;
-    private float _roamTimeLimit;
+    private Vector2 _roamTarget;
     private float _idleTimeLimit;
     private bool _canAttack = true;
     private float _lastAggroTime;
 
     private EnemyAIState _currentState;
-    //private BoxCollider2D _aggroDetection;
     private EnemyPathfinding _enemyPathfinding;
     private EnemyAnimations _animations;
 
     private void Awake()
     {
-        //_aggroDetection = GetComponentInChildren<BoxCollider2D>();
         _enemyPathfinding = GetComponent<EnemyPathfinding>();
         _animations = GetComponent<EnemyAnimations>();
-
-        //_attackRange = _aggroDetection.size.x;
     }
 
     private void Start()
     {
         TransitionTo(EnemyAIState.Idle);
-        GetRoamingDirection();
+        SetRoamingTarget();
     }
 
     private void Update()
@@ -113,6 +111,7 @@ public class EnemyAI : MonoBehaviour
         _currentState = EnemyAIState.Idle;
         _animations.Idle();
         _enemyPathfinding.StopMoving();
+        _enemyPathfinding.SetAggroState(false);
     }
 
     private void Idle()
@@ -127,24 +126,35 @@ public class EnemyAI : MonoBehaviour
     {
         //Debug.Log("StartRoaming");
         _currentState = EnemyAIState.Roaming;
-        _roamTimeLimit = Mathf.Max(_defaultRoamChangeDirTime + Random.Range(-_idleStateVariationLimit, _idleStateVariationLimit), _minIdleStateDuration);
-        _roamDirection = GetRoamingDirection();
+        SetRoamingTarget();
         _animations.Walk();
+        _enemyPathfinding.SetAggroState(false);
     }
 
     private void Roaming()
     {
-        _enemyPathfinding.MoveToward(_roamDirection);
+        _enemyPathfinding.MoveTo(_roamTarget);
 
-        if (_timeInCurrentState > _roamTimeLimit)
+        float targetDistance = transform.position.x - _roamTarget.x;
+
+        if (Mathf.Abs(targetDistance) < _roamCloseEnough || _timeInCurrentState >= _roamTimeLimit)
         {
             TransitionTo(EnemyAIState.Idle);
         }
     }
 
-    private float GetRoamingDirection()
+    private void SetRoamingTarget()
     {
-        return Random.Range(-1f, 1f);
+        float roamingDistance = Random.Range(-_maxRoamingDistance, _maxRoamingDistance);
+        if (Mathf.Sign(roamingDistance) > 0)
+        {
+            roamingDistance = Mathf.Max(_minRoamingDistance, roamingDistance);
+        }
+        else
+        {
+            roamingDistance = Mathf.Min(-_minRoamingDistance, roamingDistance);
+        }
+        _roamTarget = new Vector2(transform.position.x + roamingDistance, transform.position.y);
     }
 
     private void StartAggro()
@@ -157,6 +167,7 @@ public class EnemyAI : MonoBehaviour
         _enemyPathfinding.LookToward(targetDir.x);
         // play aggro animation
         _animations.Idle();
+        _enemyPathfinding.SetAggroState(true);
     }
 
     private void Aggroing()
@@ -187,10 +198,9 @@ public class EnemyAI : MonoBehaviour
         {
             TransitionTo(EnemyAIState.Idle);
         }
-        else // if (Vector3.Distance(transform.position, targetPos) > _attackRange)
+        else // (Vector3.Distance(transform.position, targetPos) > _attackRange)
         {
-            Vector2 targetDir = targetPos - transform.position;
-            _enemyPathfinding.MoveToward(targetDir.x);
+            _enemyPathfinding.MoveTo(targetPos);
         }
     }
 
@@ -229,9 +239,12 @@ public class EnemyAI : MonoBehaviour
 
     private void MindlessRoaming()
     {
-        _enemyPathfinding.MoveToward(_roamDirection);
+        _enemyPathfinding.SetAggroState(false);
+        _enemyPathfinding.MoveTo(_roamTarget);
 
-        if (_timeInCurrentState > _defaultRoamChangeDirTime)
+        float targetDistance = transform.position.x - _roamTarget.x;
+
+        if (Mathf.Abs(targetDistance) < _roamCloseEnough || _timeInCurrentState >= _roamTimeLimit)
         {
             TransitionTo(EnemyAIState.Roaming);
         }
@@ -257,6 +270,11 @@ public class EnemyAI : MonoBehaviour
         endPt.y += .2f;
         startPt.y = endPt.y;
         Gizmos.DrawLine(startPt, endPt);
+        if (_currentState == EnemyAIState.Roaming)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(_roamTarget, Vector3.one);
+        }
     }
 }
 

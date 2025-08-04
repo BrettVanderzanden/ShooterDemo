@@ -126,6 +126,7 @@ Transform:
   m_Children:
   - {fileID: 8161455276463212623}
   - {fileID: 8002648819896642890}
+  - {fileID: 3535621072926057573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &482722234227727976
@@ -228,10 +229,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyType: {fileID: 0}
   _defaultIdleDuration: 4
-  _defaultRoamChangeDirTime: 1.5
   _idleStateVariationLimit: 2
   _minIdleStateDuration: 0.3
   _attackCooldown: 1
+  _attackRange: 3
+  _aggroRange: 10
+  _aggroPauseDuration: 1
+  _aggroCooldown: 4
+  _minRoamingDistance: 4
+  _maxRoamingDistance: 10
+  _roamCloseEnough: 0.2
 --- !u!114 &14949344919044638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +251,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94f2b70a84ebe82488c4674c3e914a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 5
+  _walkSpeed: 5
+  _runSpeed: 5
+  _jumpStrength: 10
+  _timeTilJump: 0.2
+  _unmovingDistance: 0.01
+  _jumpCooldown: 0.8
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _feetTransform: {fileID: 0}
+  _groundCheck: {x: 0, y: 0}
 --- !u!114 &7337633081189637471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,3 +378,34 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 16.202513, y: 3.9140334}
   m_EdgeRadius: 0
+--- !u!1 &8158220848249702513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3535621072926057573}
+  m_Layer: 7
+  m_Name: Feet Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3535621072926057573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8158220848249702513}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.431, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7946575663268393198}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

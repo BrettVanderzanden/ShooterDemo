@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2901487511392674145}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.452, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -163,8 +163,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.121914625, y: 0.006095886}
-  m_Size: {x: 0.9632764, y: 2.5239353}
+  m_Offset: {x: 0.05870676, y: 0.86357194}
+  m_Size: {x: 0.83686066, y: 1.7376684}
   m_Direction: 0
 --- !u!50 &6091680828553187676
 Rigidbody2D:
@@ -182,7 +182,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 791cf43177a50624c8ea421f71676516, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -239,6 +239,7 @@ MonoBehaviour:
   _minRoamingDistance: 4
   _maxRoamingDistance: 10
   _roamCloseEnough: 0.2
+  _roamTimeLimit: 6
 --- !u!114 &14949344919044638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  _feetTransform: {fileID: 0}
+  _feetTransform: {fileID: 3535621072926057573}
   _groundCheck: {x: 0, y: 0}
 --- !u!114 &7337633081189637471
 MonoBehaviour:
@@ -366,7 +367,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 6.6127234, y: 0.31639457}
+  m_Offset: {x: 4.123021, y: 0.62016344}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -376,7 +377,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 16.202513, y: 3.9140334}
+  m_Size: {x: 11.223108, y: 3.3064957}
   m_EdgeRadius: 0
 --- !u!1 &8158220848249702513
 GameObject:

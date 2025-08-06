@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _dashing = false;
     private float _dashTime = 0f;
     private float _defaultGravityScale;
+    private Vector2 _dashStartPt, _dashEndPt;
 
     private Rigidbody2D _rigidBody;
     private Knockback _knockback;
@@ -87,6 +88,10 @@ public class PlayerMovement : MonoBehaviour
             Vector2 movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
             _rigidBody.linearVelocity = movement;
         }
+        else
+        {
+            Debug.Log(_rigidBody.gravityScale);
+        }
     }
 
     private void ApplyJumpForce()
@@ -104,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         _dashing = true;
         _dashTime = _dashDuration;
         _rigidBody.gravityScale = 0f;
+        _dashStartPt = transform.position;
         StartCoroutine(DashEnd());
     }
 
@@ -123,5 +129,14 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(_dashDuration);
         _rigidBody.gravityScale = _defaultGravityScale;
+        _dashEndPt = transform.position;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.whiteSmoke;
+        Gizmos.DrawCube(_dashStartPt, Vector3.one * 0.5f);
+        Gizmos.color = Color.white;
+        Gizmos.DrawCube(_dashEndPt, Vector3.one * 0.5f);
     }
 }

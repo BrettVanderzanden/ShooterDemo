@@ -22,7 +22,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private float _timeInAir;
     private float _coyoteTimer;
-    private bool _doubleJumpAvailable;
+    private bool _doubleJumpAvailable = false;
     private bool _controlEnabled = true;
     private float _dashTimer = 0f;
 
@@ -177,7 +177,7 @@ public class PlayerController : Singleton<PlayerController>
         if (CheckGrounded())
         {
             _coyoteTimer = _coyoteTime;
-            _doubleJumpAvailable = true;
+            // _doubleJumpAvailable = true;
         }
         else
         {

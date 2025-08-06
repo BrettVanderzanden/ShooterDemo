@@ -19,12 +19,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _maxRoamingDistance = 10f;
     [SerializeField] private float _roamCloseEnough = 0.2f;
     [SerializeField] private float _roamTimeLimit = 6f;
+    [SerializeField] private float _maxWanderDistance = 15f; // distance from spawn
 
     private float _timeInCurrentState = 0f;
     private Vector2 _roamTarget;
     private float _idleTimeLimit;
     private bool _canAttack = true;
     private float _lastAggroTime;
+    private Vector2 _spawnPoint;
 
     private EnemyAIState _currentState;
     private EnemyPathfinding _enemyPathfinding;
@@ -40,6 +42,7 @@ public class EnemyAI : MonoBehaviour
     {
         TransitionTo(EnemyAIState.Idle);
         SetRoamingTarget();
+        _spawnPoint = transform.position;
     }
 
     private void Update()
@@ -154,6 +157,11 @@ public class EnemyAI : MonoBehaviour
         {
             roamingDistance = Mathf.Min(-_minRoamingDistance, roamingDistance);
         }
+        float distanceFromSpawn = transform.position.x - _spawnPoint.x;
+        if (Mathf.Abs(distanceFromSpawn + roamingDistance) > _maxWanderDistance)
+        {
+            roamingDistance *= -1f;
+        }
         _roamTarget = new Vector2(transform.position.x + roamingDistance, transform.position.y);
     }
 
@@ -263,10 +271,12 @@ public class EnemyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Vector3 startPt = transform.position;
         Vector3 endPt = transform.position;
-        endPt.x += _attackRange;
+        endPt.x += _attackRange * Mathf.Sign(transform.right.x);
+        endPt.y += .2f;
+        startPt.y = endPt.y;
         Gizmos.DrawLine(startPt, endPt);
         Gizmos.color = Color.yellow;
-        endPt.x = transform.position.x + _aggroRange;
+        endPt.x = transform.position.x + _aggroRange * Mathf.Sign(transform.right.x);
         endPt.y += .2f;
         startPt.y = endPt.y;
         Gizmos.DrawLine(startPt, endPt);
@@ -275,6 +285,9 @@ public class EnemyAI : MonoBehaviour
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(_roamTarget, Vector3.one);
         }
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawLine(new Vector3(_spawnPoint.x - _maxWanderDistance, _spawnPoint.y + 5f, 10f), new Vector3(_spawnPoint.x - _maxWanderDistance, _spawnPoint.y - 5f, 10f));
+        Gizmos.DrawLine(new Vector3(_spawnPoint.x + _maxWanderDistance, _spawnPoint.y + 5f, 10f), new Vector3(_spawnPoint.x + _maxWanderDistance, _spawnPoint.y - 5f, 10f));
     }
 }
 

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     private float _moveX;
     private bool _canMove = true;
     private bool _dashing = false;
-    private float _dashingTime = 0f;
+    private float _dashTime = 0f;
+    private float _defaultGravityScale;
 
     private Rigidbody2D _rigidBody;
     private Knockback _knockback;
@@ -22,6 +24,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _knockback = GetComponent<Knockback>();
+    }
+
+    private void Start()
+    {
+        _defaultGravityScale = _rigidBody.gravityScale;
     }
 
     private void OnEnable()
@@ -44,9 +51,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_dashingTime > 0f)
+        if (_dashTime > 0f)
         {
-            _dashingTime -= Time.deltaTime;
+            _dashTime -= Time.deltaTime;
         }
         else
         {
@@ -90,22 +97,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyDashForce()
     {
-        Vector2 dashDir = new Vector2(_rigidBody.linearVelocityX, 0f).normalized;
-        Debug.Log(dashDir);
+        _rigidBody.linearVelocity = Vector2.zero;
+        Vector2 dashDir = new Vector2(_moveX, 0f).normalized;
+        Debug.Log("Dash " + dashDir);
         _rigidBody.AddForce(dashDir * _dashStrength, ForceMode2D.Impulse);
         _dashing = true;
-        _dashingTime = _dashDuration;
+        _dashTime = _dashDuration;
+        _rigidBody.gravityScale = 0f;
+        StartCoroutine(DashEnd());
     }
 
     private void KnockbackStart()
     {
-        Debug.Log("Knockback Start");
+        //Debug.Log("Knockback Start");
         _canMove = false;
     }
 
     private void KnockbackEnd()
     {
-        Debug.Log("Knockback End");
+        //Debug.Log("Knockback End");
         _canMove = true;
+    }
+
+    private IEnumerator DashEnd()
+    {
+        yield return new WaitForSeconds(_dashDuration);
+        _rigidBody.gravityScale = _defaultGravityScale;
     }
 }

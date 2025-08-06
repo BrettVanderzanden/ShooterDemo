@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2255790979850620033}
   - component: {fileID: 8126941920007174766}
-  m_Layer: 7
+  m_Layer: 12
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 2035995309384877844}
   - component: {fileID: 5534746143423778414}
   - component: {fileID: 2169652367463404645}
-  m_Layer: 7
+  m_Layer: 12
   m_Name: Landmine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -182,5 +182,5 @@ MonoBehaviour:
   _damageAmount: 100
   _knockbackThrust: 10
   _damageRadius: 2.5
-  _detonationDelay: 0.4
-  _explosionVFX: {fileID: 0}
+  _detonationDelay: 0.33
+  _explosionVFX: {fileID: 646720405206550259, guid: e16b4fe240ae9d8478c0b74632032472, type: 3}

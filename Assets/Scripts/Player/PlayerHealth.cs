@@ -69,6 +69,11 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
         // hit fx
     }
 
+    public void Kill()
+    {
+        TakeDamage(_currentHealth);
+    }
+
     private void CheckAlive()
     {
         if (_currentHealth <= 0 && !IsDead)

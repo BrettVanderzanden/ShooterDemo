@@ -36,6 +36,11 @@ public class Health : MonoBehaviour, IDamageable
         }
     }
 
+    public void Kill()
+    {
+        TakeDamage(_currentHealth);
+    }
+
     public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust)
     {
         _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);

@@ -520,8 +520,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5279344555232530877}
-  - component: {fileID: 8170813311032819356}
-  - component: {fileID: 3607221741164155067}
   - component: {fileID: 7048805044789529747}
   - component: {fileID: 3769092811612316732}
   - component: {fileID: 4589641592221075672}
@@ -554,80 +552,6 @@ Transform:
   - {fileID: 3460750747834199681}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &8170813311032819356
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6763881267423382630}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 3.56, y: 7.1198363}
-  m_Direction: 0
---- !u!70 &3607221741164155067
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6763881267423382630}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -2.94}
-  m_Size: {x: 3.49, y: 1.24}
-  m_Direction: 1
 --- !u!61 &7048805044789529747
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -730,10 +654,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 256
-  _extraGravity: 5000
-  _gravityDelay: 0.2
   _coyoteTime: 0.1
-  _maxFallSpeedVelocity: -40
   _spawnAtStartPoint: 1
   _dashCooldown: 1
 --- !u!114 &1834032242073717515
@@ -750,8 +671,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveSpeed: 10
   _jumpStrength: 14
-  _dashStrength: 14
-  _dashDuration: 6.72
+  _dashStrength: 20.8
+  _dashDuration: 0.2
+  _gravityDelay: 0.2
+  _extraGravity: 5000
+  _maxFallVelocity: -40
 --- !u!114 &2084083494325077376
 MonoBehaviour:
   m_ObjectHideFlags: 0

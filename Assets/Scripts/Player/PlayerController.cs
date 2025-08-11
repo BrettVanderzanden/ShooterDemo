@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PlayerController : Singleton<PlayerController>
 {
     public Vector2 MoveInput => _frameInput.Move;
+    public bool IsGrounded => _isGrounded;
 
     public static Action OnJump;
     public static Action OnDash;
@@ -13,14 +14,10 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
     [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _extraGravity = 1000f;
-    [SerializeField] private float _gravityDelay = 0.25f;
     [SerializeField] private float _coyoteTime = 0.1f;
-    [SerializeField] private float _maxFallSpeedVelocity = -25f;
     [SerializeField] private bool _spawnAtStartPoint = true;
     [SerializeField] private float _dashCooldown = 1f;
 
-    private float _timeInAir;
     private float _coyoteTimer;
     private bool _doubleJumpAvailable = false;
     private bool _controlEnabled = true;
@@ -80,13 +77,7 @@ public class PlayerController : Singleton<PlayerController>
         CoyoteTimer();
         HandleJump();
         HandleDash();
-        GravityDelay();
         HandleSpriteFlip();
-    }
-
-    private void FixedUpdate()
-    {
-        ExtraGravity();
     }
 
     public bool IsFacingRight()
@@ -104,30 +95,6 @@ public class PlayerController : Singleton<PlayerController>
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(_feetTransform.position, _groundCheck);
-    }
-
-    private void GravityDelay()
-    {
-        if (!CheckGrounded())
-        {
-            _timeInAir += Time.deltaTime;
-        }
-        else
-        {
-            _timeInAir = 0f;
-        }
-    }
-
-    private void ExtraGravity()
-    {
-        if (_timeInAir > _gravityDelay)
-        {
-            _rigidBody.AddForce(new Vector2(0f, -_extraGravity * Time.deltaTime));
-            if (_rigidBody.linearVelocityY < _maxFallSpeedVelocity)
-            {
-                _rigidBody.linearVelocityY = _maxFallSpeedVelocity;
-            }
-        }
     }
 
     private void GatherInput()
@@ -168,7 +135,6 @@ public class PlayerController : Singleton<PlayerController>
 
     private void StartJump()
     {
-        _timeInAir = 0f;
         _coyoteTimer = 0f;
     }
 
@@ -229,6 +195,6 @@ public class PlayerController : Singleton<PlayerController>
 
     public void StartTNTKnockback()
     {
-        StartJump();
+        _movement.StartTNTKnockback();
     }
 }

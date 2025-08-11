@@ -10,6 +10,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpStrength = 14f;
     [SerializeField] private float _dashStrength = 14f;
     [SerializeField] private float _dashDuration = .3f;
+    [SerializeField] private float _gravityDelay = 0.25f;
+    [SerializeField] private float _extraGravity = 1000f;
+    [SerializeField] private float _maxFallVelocity = -25f;
+    [SerializeField] private float _tntKnockbackDuration = 0.2f;
 
     private float _moveX;
     private bool _canMove = true;
@@ -17,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private float _dashTime = 0f;
     private float _defaultGravityScale;
     private Vector2 _dashStartPt, _dashEndPt;
+    private float _timeInAir;
+    private bool _inTNTKnockback = false;
 
     private Rigidbody2D _rigidBody;
     private Knockback _knockback;
@@ -52,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        GravityDelay();
         if (_dashTime > 0f)
         {
             _dashTime -= Time.deltaTime;
@@ -65,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+        ExtraGravity();
     }
 
     public void SetCurrentDirection(float currentDirection)
@@ -96,21 +104,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyJumpForce()
     {
+        _timeInAir = 0f;
         _rigidBody.linearVelocity = Vector2.zero;
         _rigidBody.AddForce(Vector2.up * _jumpStrength, ForceMode2D.Impulse);
     }
 
     private void ApplyDashForce()
     {
-        _rigidBody.linearVelocity = Vector2.zero;
+        //_rigidBody.linearVelocity = Vector2.zero;
         Vector2 dashDir = new Vector2(_moveX, 0f).normalized;
         Debug.Log("Dash " + dashDir);
         _rigidBody.AddForce(dashDir * _dashStrength, ForceMode2D.Impulse);
         _dashing = true;
         _dashTime = _dashDuration;
-        _rigidBody.gravityScale = 0f;
+        //_rigidBody.gravityScale = 0f;
         _dashStartPt = transform.position;
         StartCoroutine(DashEnd());
+    }
+
+    private IEnumerator DashEnd()
+    {
+        yield return new WaitForSeconds(_dashDuration);
+        _rigidBody.gravityScale = _defaultGravityScale;
+        _dashEndPt = transform.position;
     }
 
     private void KnockbackStart()
@@ -125,11 +141,42 @@ public class PlayerMovement : MonoBehaviour
         _canMove = true;
     }
 
-    private IEnumerator DashEnd()
+    public void StartTNTKnockback()
     {
-        yield return new WaitForSeconds(_dashDuration);
-        _rigidBody.gravityScale = _defaultGravityScale;
-        _dashEndPt = transform.position;
+        _timeInAir = 0f;
+        _inTNTKnockback = true;
+        StartCoroutine(TNTKnockbackEnd());
+    }
+
+    private IEnumerator TNTKnockbackEnd()
+    {
+        yield return new WaitForSeconds(_tntKnockbackDuration);
+        _inTNTKnockback = false;
+        _timeInAir = 0f;
+    }
+
+    private void GravityDelay()
+    {
+        if (!PlayerController.Instance.IsGrounded)
+        {
+            _timeInAir += Time.deltaTime;
+        }
+        else
+        {
+            _timeInAir = 0f;
+        }
+    }
+
+    private void ExtraGravity()
+    {
+        if (_timeInAir > _gravityDelay && !_dashing && !_inTNTKnockback)
+        {
+            _rigidBody.AddForce(new Vector2(0f, -_extraGravity * Time.deltaTime));
+            if (_rigidBody.linearVelocityY < _maxFallVelocity)
+            {
+                _rigidBody.linearVelocityY = _maxFallVelocity;
+            }
+        }
     }
 
     private void OnDrawGizmos()

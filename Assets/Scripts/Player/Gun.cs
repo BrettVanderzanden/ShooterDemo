@@ -154,9 +154,10 @@ public class Gun : MonoBehaviour
     private void RotateGun()
     {
         _mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector3 direction = _mousePos - transform.position;
+        // Direction from gun to mouse, in parent-local space
+        Vector2 direction = (Vector2)(transform.parent.InverseTransformPoint(_mousePos) - transform.localPosition);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.localRotation = Quaternion.Euler(0, 0, angle);
+        transform.localRotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     private void OnDrawGizmos()

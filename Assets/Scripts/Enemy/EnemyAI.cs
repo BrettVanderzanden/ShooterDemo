@@ -19,14 +19,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _maxRoamingDistance = 10f;
     [SerializeField] private float _roamCloseEnough = 0.2f;
     [SerializeField] private float _roamTimeLimit = 6f;
-    [SerializeField] private float _maxWanderDistance = 15f; // distance from spawn
+    [SerializeField] private Vector3 _wanderCenter;
+    [SerializeField] private float _maxWanderDistance = 15f; // distance from wanderCenter
 
     private float _timeInCurrentState = 0f;
     private Vector2 _roamTarget;
     private float _idleTimeLimit;
     private bool _canAttack = true;
     private float _lastAggroTime;
-    private Vector2 _spawnPoint;
 
     private EnemyAIState _currentState;
     private EnemyPathfinding _enemyPathfinding;
@@ -42,7 +42,6 @@ public class EnemyAI : MonoBehaviour
     {
         TransitionTo(EnemyAIState.Idle);
         SetRoamingTarget();
-        _spawnPoint = transform.position;
     }
 
     private void Update()
@@ -157,8 +156,8 @@ public class EnemyAI : MonoBehaviour
         {
             roamingDistance = Mathf.Min(-_minRoamingDistance, roamingDistance);
         }
-        float distanceFromSpawn = transform.position.x - _spawnPoint.x;
-        if (Mathf.Abs(distanceFromSpawn + roamingDistance) > _maxWanderDistance)
+        float distanceFromWanderCenter = transform.position.x - _wanderCenter.x;
+        if (Mathf.Abs(distanceFromWanderCenter + roamingDistance) > _maxWanderDistance)
         {
             roamingDistance *= -1f;
         }
@@ -286,8 +285,9 @@ public class EnemyAI : MonoBehaviour
             Gizmos.DrawWireCube(_roamTarget, Vector3.one);
         }
         Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(new Vector3(_spawnPoint.x - _maxWanderDistance, _spawnPoint.y + 5f, 10f), new Vector3(_spawnPoint.x - _maxWanderDistance, _spawnPoint.y - 5f, 10f));
-        Gizmos.DrawLine(new Vector3(_spawnPoint.x + _maxWanderDistance, _spawnPoint.y + 5f, 10f), new Vector3(_spawnPoint.x + _maxWanderDistance, _spawnPoint.y - 5f, 10f));
+        Gizmos.DrawLine(new Vector3(_wanderCenter.x - _maxWanderDistance, _wanderCenter.y + 5f, 10f), new Vector3(_wanderCenter.x - _maxWanderDistance, _wanderCenter.y - 5f, 10f));
+        Gizmos.DrawLine(new Vector3(_wanderCenter.x + _maxWanderDistance, _wanderCenter.y + 5f, 10f), new Vector3(_wanderCenter.x + _maxWanderDistance, _wanderCenter.y - 5f, 10f));
+        Gizmos.DrawWireCube(_wanderCenter, Vector3.one * 0.3f);
     }
 }
 

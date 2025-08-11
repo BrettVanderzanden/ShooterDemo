@@ -240,6 +240,7 @@ MonoBehaviour:
   _maxRoamingDistance: 10
   _roamCloseEnough: 0.2
   _roamTimeLimit: 6
+  _maxWanderDistance: 15
 --- !u!114 &14949344919044638
 MonoBehaviour:
   m_ObjectHideFlags: 0

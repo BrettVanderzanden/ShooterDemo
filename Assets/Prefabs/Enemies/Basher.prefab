@@ -104,6 +104,10 @@ PrefabInstance:
       value: 0.76
       objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: _aggroPauseDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _maxRoamingDistance
       value: 6
       objectReference: {fileID: 0}

@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _extraGravity = 1000f;
     [SerializeField] private float _maxFallVelocity = -25f;
     [SerializeField] private float _tntKnockbackDuration = 0.2f;
+    [SerializeField] private TrailRenderer _tntTrailRenderer;
 
     private float _moveX;
     private bool _canMove = true;
@@ -145,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _timeInAir = 0f;
         _inTNTKnockback = true;
+        _tntTrailRenderer.emitting = true;
         StartCoroutine(TNTKnockbackEnd());
     }
 
@@ -153,6 +155,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(_tntKnockbackDuration);
         _inTNTKnockback = false;
         _timeInAir = 0f;
+        _tntTrailRenderer.emitting = false;
     }
 
     private void GravityDelay()

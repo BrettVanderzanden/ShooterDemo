@@ -7,20 +7,24 @@ public class EnemyAI : MonoBehaviour
     public EnemyAIState CurrentState => _currentState;
 
     [SerializeField] private MonoBehaviour _enemyType;
+    [Header("Basics")]
+    [SerializeField] private bool _movementEnabled = true;
     [SerializeField] private float _defaultIdleDuration = 4f;
     [SerializeField] private float _idleStateVariationLimit = 2f;
     [SerializeField] private float _minIdleStateDuration = 0.3f;
-    [SerializeField] private float _attackCooldown = 1f;
-    [SerializeField] private float _attackRange = 3f;
-    [SerializeField] private float _aggroRange = 10f;
-    [SerializeField] private float _aggroPauseDuration = 1f;
-    [SerializeField] private float _aggroCooldown = 4f; // aggro should probably be reworked...
+    [SerializeField] private bool _randomizeIdleDirection = true;
     [SerializeField] private float _minRoamingDistance = 4f;
     [SerializeField] private float _maxRoamingDistance = 10f;
     [SerializeField] private float _roamCloseEnough = 0.2f;
     [SerializeField] private float _roamTimeLimit = 6f;
     [SerializeField] private Vector3 _wanderCenter;
     [SerializeField] private float _maxWanderDistance = 15f; // distance from wanderCenter
+    [Header("Combat")]
+    [SerializeField] private float _attackCooldown = 1f;
+    [SerializeField] private float _attackRange = 3f;
+    [SerializeField] private float _aggroRange = 10f;
+    [SerializeField] private float _aggroPauseDuration = 1f;
+    [SerializeField] private float _aggroCooldown = 4f; // aggro should probably be reworked...
 
     private float _timeInCurrentState = 0f;
     private Vector2 _roamTarget;
@@ -84,26 +88,49 @@ public class EnemyAI : MonoBehaviour
     private void TransitionTo(EnemyAIState _nextState)
     {
         _timeInCurrentState = 0f;
-        switch (_nextState)
+        if (_movementEnabled)
         {
-            case EnemyAIState.Idle:
-                StartIdle();
-                break;
-            case EnemyAIState.Roaming:
-                StartRoaming();
-                break;
-            case EnemyAIState.Aggro:
-                StartAggro();
-                break;
-            case EnemyAIState.MovingToAttack:
-                StartMovingToAttack();
-                break;
-            case EnemyAIState.Attacking:
-                StartAttacking();
-                break;
-            default:
-                break;
+            switch (_nextState)
+            {
+                case EnemyAIState.Idle:
+                    StartIdle();
+                    break;
+                case EnemyAIState.Roaming:
+                    StartRoaming();
+                    break;
+                case EnemyAIState.Aggro:
+                    StartAggro();
+                    break;
+                case EnemyAIState.MovingToAttack:
+                    StartMovingToAttack();
+                    break;
+                case EnemyAIState.Attacking:
+                    StartAttacking();
+                    break;
+                default:
+                    break;
+            }
         }
+        else // unmoving enemy
+        {
+            switch (_nextState)
+            {
+                case EnemyAIState.Idle:
+                case EnemyAIState.Roaming:
+                    StartIdle();
+                    break;
+                case EnemyAIState.Aggro:
+                    StartAggro();
+                    break;
+                case EnemyAIState.MovingToAttack:
+                case EnemyAIState.Attacking:
+                    StartAttacking();
+                    break;
+                default:
+                    break;
+            }
+        }
+        
     }
 
     private void StartIdle()
@@ -113,7 +140,17 @@ public class EnemyAI : MonoBehaviour
         _currentState = EnemyAIState.Idle;
         _animations.Idle();
         _enemyPathfinding.StopMoving();
+        RandomIdleDirection();
         _enemyPathfinding.SetAggroState(false);
+    }
+
+    private void RandomIdleDirection()
+    {
+        if (_randomizeIdleDirection)
+        {
+            float direction = Random.Range(-1, 1);
+            _enemyPathfinding.LookToward(direction);
+        }
     }
 
     private void Idle()

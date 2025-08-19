@@ -14,7 +14,7 @@ TagManager:
   - Player
   - Enemy
   - Ground
-  - Background
+  - 
   - Aggro
   - Player Attack
   - Enemy Attack
@@ -52,6 +52,9 @@ TagManager:
     locked: 0
   - name: VFX
     uniqueID: 4154543247
+    locked: 0
+  - name: Foreground
+    uniqueID: 2278226253
     locked: 0
   m_RenderingLayers:
   - Default

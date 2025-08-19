@@ -7,7 +7,8 @@ public class PlayerController : Singleton<PlayerController>
 {
     public Vector2 MoveInput => _frameInput.Move;
     public bool IsGrounded => _isGrounded;
-
+    public bool IsJumpHeld { get; private set; }
+    
     public static Action OnJump;
     public static Action OnDash;
 
@@ -19,12 +20,12 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private float _dashCooldown = 1f;
 
     private float _coyoteTimer;
-    private bool _doubleJumpAvailable = false;
     private bool _controlEnabled = true;
     private float _dashTimer = 0f;
 
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
+    private FrameInput _previousFrameInput;
     private PlayerMovement _movement;
     private Collider2D _isGrounded;
     private Vector3 _defaultScenePlacement;
@@ -76,6 +77,8 @@ public class PlayerController : Singleton<PlayerController>
         HandleJump();
         HandleDash();
         HandleSpriteFlip();
+        IsJumpHeld = _frameInput.Jump;
+        _previousFrameInput = _frameInput;
     }
 
     public bool IsFacingRight()
@@ -116,18 +119,16 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (!_frameInput.Jump) { return; }
 
-        if (CheckGrounded())
+        if (!_previousFrameInput.Jump)
         {
-            OnJump?.Invoke();
-        }
-        else if (_coyoteTimer > 0f)
-        {
-            OnJump?.Invoke();
-        }
-        else if (_doubleJumpAvailable)
-        {
-            _doubleJumpAvailable = false;
-            OnJump?.Invoke();
+            if (CheckGrounded())
+            {
+                OnJump?.Invoke();
+            }
+            else if (_coyoteTimer > 0f)
+            {
+                OnJump?.Invoke();
+            }
         }
     }
 

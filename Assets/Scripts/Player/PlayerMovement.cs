@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _maxFallVelocity = -25f;
     [SerializeField] private float _tntKnockbackDuration = 0.2f;
     [SerializeField] private TrailRenderer _tntTrailRenderer;
+    [SerializeField] private float _lowJumpMultiplier = 2f;
+    [SerializeField] private float _fallMultiplier = 2.5f;
 
     private float _moveX;
     private bool _canMove = true;
@@ -73,7 +75,9 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        ExtraGravity();
+        //HandleJump();
+        //ExtraGravity();
+        JumpAndGravity();
     }
 
     public void SetCurrentDirection(float currentDirection)
@@ -179,6 +183,47 @@ public class PlayerMovement : MonoBehaviour
             {
                 _rigidBody.linearVelocityY = _maxFallVelocity;
             }
+        }
+    }
+
+    private void HandleJump()
+    {
+        float velY = _rigidBody.linearVelocityY;
+
+        if (velY > 0 && !PlayerController.Instance.IsJumpHeld)
+        {
+            // Cut jump short when button released
+            _rigidBody.AddForce(new Vector2(0f, Physics2D.gravity.y * (_lowJumpMultiplier - 1) * _rigidBody.mass));
+        }
+        else if (velY < 0)
+        {
+            // Falling faster
+            _rigidBody.AddForce(new Vector2(0f, Physics2D.gravity.y * (_fallMultiplier - 1) * _rigidBody.mass));
+        }
+    }
+
+    private void JumpAndGravity()
+    {
+        float velY = _rigidBody.linearVelocityY;
+
+        if (!_dashing && !_inTNTKnockback)
+        {
+            if (!PlayerController.Instance.IsGrounded && _timeInAir > _gravityDelay)
+            {
+                _rigidBody.AddForce(Vector2.up * -_extraGravity * Time.fixedDeltaTime);
+            }
+
+            if (velY > 0f && !PlayerController.Instance.IsJumpHeld)
+            {
+                _rigidBody.AddForce(Vector2.up * Physics2D.gravity.y * (_lowJumpMultiplier - 1) * _rigidBody.mass);
+            }
+            else if (velY < 0f)
+            {
+                _rigidBody.AddForce(Vector2.up * Physics2D.gravity.y * (_fallMultiplier - 1) * _rigidBody.mass);
+            }
+
+            if (_rigidBody.linearVelocityY < _maxFallVelocity)
+                _rigidBody.linearVelocityY = _maxFallVelocity;
         }
     }
 

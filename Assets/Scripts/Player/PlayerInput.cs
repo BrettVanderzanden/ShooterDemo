@@ -39,7 +39,7 @@ public class PlayerInput : MonoBehaviour
         return new FrameInput
         {
             Move = _move.ReadValue<Vector2>(),
-            Jump = _jump.triggered,
+            Jump = _jump.IsPressed(),
             Shoot = _shoot.IsPressed(),
             Dash = _dash.triggered,
             TNT = _tnt.triggered,

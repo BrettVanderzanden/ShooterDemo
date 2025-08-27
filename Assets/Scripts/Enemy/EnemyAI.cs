@@ -19,6 +19,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _roamTimeLimit = 6f;
     [SerializeField] private Vector3 _wanderCenter;
     [SerializeField] private float _maxWanderDistance = 15f; // distance from wanderCenter
+    [SerializeField] private float _startFacing = 1f;
     [Header("Combat")]
     [SerializeField] private float _attackCooldown = 1f;
     [SerializeField] private float _attackRange = 3f;
@@ -45,6 +46,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         TransitionTo(EnemyAIState.Idle);
+        _enemyPathfinding.LookToward(_startFacing);
         SetRoamingTarget();
     }
 

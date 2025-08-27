@@ -56,6 +56,6 @@ public class Knockback : MonoBehaviour
 
     private void StopKnockbackRoutine()
     {
-        _rigidBody.linearVelocity = Vector2.zero;
+        //_rigidBody.linearVelocity = Vector2.zero;
     }
 }

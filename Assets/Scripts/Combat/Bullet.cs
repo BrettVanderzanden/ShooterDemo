@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private Gun _gun;
     private Shooter _shooter;
+    private Gunner _gunner;
 
     private void Awake()
     {
@@ -38,6 +39,13 @@ public class Bullet : MonoBehaviour
         _fireDirection = targetDir.normalized;
     }
 
+    public void Init(Gunner gunner, Vector2 bulletSpawnPos, Vector2 targetDir)
+    {
+        _gunner = gunner;
+        transform.position = bulletSpawnPos;
+        _fireDirection = targetDir.normalized;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         Instantiate(_bulletVFX, transform.position, Quaternion.identity);
@@ -56,6 +64,10 @@ public class Bullet : MonoBehaviour
         else if (_shooter != null)
         {
             _shooter.ReleaseBulletFromPool(this);
+        }
+        else if (_gunner != null)
+        {
+            _gunner.ReleaseBulletFromPool(this);
         }
     }
 }

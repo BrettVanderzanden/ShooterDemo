@@ -69,7 +69,7 @@ public class EnemyPathfinding : MonoBehaviour
                 _timeUnmoving += Time.fixedDeltaTime;
                 if (_timeUnmoving >= _timeTilJump && Time.time >= _lastJumpTime && CheckGrounded())
                 {
-                    Debug.Log("Enemy Jumps");
+                    //Debug.Log("Enemy Jumps");
                     OnJump?.Invoke();
                 }
             }

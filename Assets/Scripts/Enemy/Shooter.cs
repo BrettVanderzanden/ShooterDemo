@@ -48,4 +48,12 @@ public class Shooter : MonoBehaviour, IEnemy
         Bullet newBullet = _bulletPool.Get();
         newBullet.Init(this, _bulletSpawnPoint.position, targetDir);
     }
+
+    public void StartCombat()
+    {
+    }
+
+    public void ExitCombat()
+    {
+    }
 }

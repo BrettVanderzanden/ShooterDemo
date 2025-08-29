@@ -8,12 +8,14 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float _moveSpeed = 15f;
     [SerializeField] private int _damageAmount = 1;
     [SerializeField] private float _knockbackThrust = 30;
+    [SerializeField] private float _maxLifeTime = 2f;
 
     private Vector2 _fireDirection;
     private Rigidbody2D _rigidBody;
     private Gun _gun;
     private Shooter _shooter;
     private Gunner _gunner;
+    private float _expirationTime;
 
     private void Awake()
     {
@@ -23,6 +25,10 @@ public class Bullet : MonoBehaviour
     private void FixedUpdate()
     {
         _rigidBody.linearVelocity = _fireDirection * _moveSpeed;
+        if (Time.fixedTime >= _expirationTime)
+        {
+            ReleaseBullet();
+        }
     }
 
     public void Init(Gun gun, Vector2 bulletSpawnPos, Vector2 mousePos)
@@ -30,6 +36,7 @@ public class Bullet : MonoBehaviour
         _gun = gun;
         transform.position = bulletSpawnPos;
         _fireDirection = (mousePos - bulletSpawnPos).normalized;
+        _expirationTime = Time.time + _maxLifeTime;
     }
 
     public void Init(Shooter shooter, Vector2 bulletSpawnPos, Vector2 targetDir)
@@ -37,6 +44,7 @@ public class Bullet : MonoBehaviour
         _shooter = shooter;
         transform.position = bulletSpawnPos;
         _fireDirection = targetDir.normalized;
+        _expirationTime = Time.time + _maxLifeTime;
     }
 
     public void Init(Gunner gunner, Vector2 bulletSpawnPos, Vector2 targetDir)
@@ -44,6 +52,7 @@ public class Bullet : MonoBehaviour
         _gunner = gunner;
         transform.position = bulletSpawnPos;
         _fireDirection = targetDir.normalized;
+        _expirationTime = Time.time + _maxLifeTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -57,6 +66,11 @@ public class Bullet : MonoBehaviour
         iDamageable?.TakeDamage(_damageAmount);
         iDamageable?.TakeKnockback(transform.position, _knockbackThrust);
 
+        ReleaseBullet();
+    }
+
+    private void ReleaseBullet()
+    {
         if (_gun != null)
         {
             _gun.ReleaseBulletFromPool(this);

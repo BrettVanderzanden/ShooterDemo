@@ -87,6 +87,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 1.5179276
       objectReference: {fileID: 0}
+    - target: {fileID: 1853926265570375269, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _enemyType
       value: 
@@ -119,6 +123,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 4723107735738678597, guid: 777737d2ae2236e49ba4b2eb1780cf84, type: 3}
+    - target: {fileID: 3094952840195898817, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.194
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094952840195898817, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.478
+      objectReference: {fileID: 0}
     - target: {fileID: 3391588385057225982, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: m_Controller
       value: 

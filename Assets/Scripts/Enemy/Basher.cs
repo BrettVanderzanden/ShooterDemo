@@ -21,6 +21,14 @@ public class Basher : MonoBehaviour, IEnemy
         // attack handled in animation
     }
 
+    public void StartCombat()
+    {
+    }
+
+    public void ExitCombat()
+    {
+    }
+
     public void DealDamage()
     {
         Debug.Log("Basher Deal Damage");

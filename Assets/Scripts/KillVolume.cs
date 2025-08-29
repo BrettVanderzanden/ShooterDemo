@@ -6,10 +6,10 @@ public class KillVolume : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Health>())
+        if (collision.gameObject.GetComponent<EnemyHealth>())
         {
             Debug.Log("Enemy Kill");
-            collision.gameObject.GetComponent<Health>().Kill();
+            collision.gameObject.GetComponent<EnemyHealth>().Kill();
         }
         else if (collision.gameObject.GetComponent<PlayerHealth>())
         {

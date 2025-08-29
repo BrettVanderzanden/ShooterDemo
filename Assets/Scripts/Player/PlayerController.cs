@@ -8,7 +8,7 @@ public class PlayerController : Singleton<PlayerController>
     public Vector2 MoveInput => _frameInput.Move;
     public bool IsGrounded => _isGrounded;
     public bool IsJumpHeld { get; private set; }
-    
+
     public static Action OnJump;
     public static Action OnDash;
 
@@ -195,5 +195,16 @@ public class PlayerController : Singleton<PlayerController>
     public void StartTNTKnockback()
     {
         _movement.StartTNTKnockback();
+    }
+
+    public Vector2 GetCenterPosition()
+    {
+        Vector2 center = transform.position;
+        BoxCollider2D bodycollider = GetComponent<BoxCollider2D>();
+
+        // player being scaled is probably bad
+        center.y += bodycollider.offset.y * transform.localScale.y;
+
+        return center;
     }
 }

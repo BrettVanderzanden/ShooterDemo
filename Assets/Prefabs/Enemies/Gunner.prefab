@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 1.1607895
       objectReference: {fileID: 0}
+    - target: {fileID: 1853926265570375269, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _enemyType
       value: 
@@ -185,7 +189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _attackCooldown
-      value: 0.2
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2011470655586507155, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: _movementEnabled
@@ -206,6 +210,14 @@ PrefabInstance:
     - target: {fileID: 2495753640986320490, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094952840195898817, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 3094952840195898817, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.32
       objectReference: {fileID: 0}
     - target: {fileID: 3391588385057225982, guid: f060766f893b4354ab56db46d4118ca6, type: 3}
       propertyPath: m_Controller
@@ -302,4 +314,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 804261947894712080, guid: f54878e71340f154692a86be453d1567, type: 3}
   _bulletSpawnPoint: {fileID: 2313314469677160792}
-  Gun: {fileID: 2938444662231377385}
+  _Gun: {fileID: 2938444662231377385}
+  _accuracyDeviation: 5

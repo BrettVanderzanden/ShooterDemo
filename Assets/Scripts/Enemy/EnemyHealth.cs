@@ -1,18 +1,20 @@
 using System;
 using UnityEngine;
 
-public class Health : MonoBehaviour, IDamageable
+public class EnemyHealth : MonoBehaviour, IDamageable
 {
-    public static Action<Health> OnDeath;
+    public static Action<EnemyHealth> OnDeath;
 
     [SerializeField] private int _startingHealth = 100;
 
     private Knockback _knockback;
+    private EnemyAI _enemyAI;
     private int _currentHealth;
 
     private void Awake()
     {
         _knockback = GetComponent<Knockback>();
+        _enemyAI = GetComponent<EnemyAI>();
     }
 
     private void Start()
@@ -28,6 +30,7 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeDamage(int dmg)
     {
         _currentHealth -= dmg;
+        _enemyAI.TakeDamage();
 
         if (_currentHealth <= 0)
         {

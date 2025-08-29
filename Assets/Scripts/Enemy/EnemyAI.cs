@@ -7,6 +7,7 @@ public class EnemyAI : MonoBehaviour
     public EnemyAIState CurrentState => _currentState;
 
     [SerializeField] private MonoBehaviour _enemyType;
+    [SerializeField] private GameObject _alertObj;
     [Header("Basics")]
     [SerializeField] private bool _movementEnabled = true;
     [SerializeField] private float _defaultIdleDuration = 4f;
@@ -26,6 +27,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float _aggroRange = 10f;
     [SerializeField] private float _aggroPauseDuration = 1f;
     [SerializeField] private float _aggroCooldown = 4f; // aggro should probably be reworked...
+    [SerializeField] private float _minimumChaseDuration = 2f;
 
     private float _timeInCurrentState = 0f;
     private Vector2 _roamTarget;
@@ -48,6 +50,7 @@ public class EnemyAI : MonoBehaviour
         TransitionTo(EnemyAIState.Idle);
         _enemyPathfinding.LookToward(_startFacing);
         SetRoamingTarget();
+        _alertObj.SetActive(false);
     }
 
     private void Update()
@@ -132,18 +135,20 @@ public class EnemyAI : MonoBehaviour
                     break;
             }
         }
-        
+
     }
 
     private void StartIdle()
     {
         //Debug.Log("StartIdle");
         _idleTimeLimit = Mathf.Max(_defaultIdleDuration + Random.Range(-_idleStateVariationLimit, _idleStateVariationLimit), _minIdleStateDuration);
+        ExitCombat();
         _currentState = EnemyAIState.Idle;
         _animations.Idle();
         _enemyPathfinding.StopMoving();
         RandomIdleDirection();
         _enemyPathfinding.SetAggroState(false);
+        _alertObj.SetActive(false);
     }
 
     private void RandomIdleDirection()
@@ -166,10 +171,12 @@ public class EnemyAI : MonoBehaviour
     private void StartRoaming()
     {
         //Debug.Log("StartRoaming");
+        ExitCombat();
         _currentState = EnemyAIState.Roaming;
         SetRoamingTarget();
         _animations.Walk();
         _enemyPathfinding.SetAggroState(false);
+        _alertObj.SetActive(false);
     }
 
     private void Roaming()
@@ -207,6 +214,7 @@ public class EnemyAI : MonoBehaviour
     {
         //Debug.Log("StartAggro");
         _lastAggroTime = Time.time;
+        StartCombat();
         _currentState = EnemyAIState.Aggro;
         _enemyPathfinding.StopMoving();
         Vector2 targetDir = PlayerController.Instance.transform.position - transform.position;
@@ -214,6 +222,7 @@ public class EnemyAI : MonoBehaviour
         // play aggro animation
         _animations.Idle();
         _enemyPathfinding.SetAggroState(true);
+        _alertObj.SetActive(true);
     }
 
     private void Aggroing()
@@ -229,6 +238,7 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("StartMovingToAttack");
         _currentState = EnemyAIState.MovingToAttack;
         _animations.Walk();
+        _alertObj.SetActive(true);
     }
 
     private void MovingToAttack()
@@ -240,11 +250,11 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        if (Vector3.Distance(transform.position, targetPos) > _aggroRange)
+        if (_timeInCurrentState >= _minimumChaseDuration && Vector3.Distance(transform.position, targetPos) > _aggroRange)
         {
             TransitionTo(EnemyAIState.Idle);
         }
-        else // (Vector3.Distance(transform.position, targetPos) > _attackRange)
+        else // (Vector3.Distance(transform.position, targetPos) > _attackRange && distance < _aggroRange)
         {
             _enemyPathfinding.MoveTo(targetPos);
         }
@@ -255,6 +265,7 @@ public class EnemyAI : MonoBehaviour
         //Debug.Log("StartAttacking");
         _currentState = EnemyAIState.Attacking;
         _enemyPathfinding.StopMoving();
+        _alertObj.SetActive(true);
     }
 
     private void Attacking()
@@ -304,6 +315,25 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void StartCombat()
+    {
+        if (_currentState == EnemyAIState.Idle
+            || _currentState == EnemyAIState.Roaming)
+        {
+            (_enemyType as IEnemy).StartCombat();
+        }
+    }
+
+    private void ExitCombat()
+    {
+        if (_currentState == EnemyAIState.Aggro
+            || _currentState == EnemyAIState.MovingToAttack
+            || _currentState == EnemyAIState.Attacking)
+        {
+            (_enemyType as IEnemy).ExitCombat();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -312,21 +342,33 @@ public class EnemyAI : MonoBehaviour
         endPt.x += _attackRange * Mathf.Sign(transform.right.x);
         endPt.y += .2f;
         startPt.y = endPt.y;
-        Gizmos.DrawLine(startPt, endPt);
+        Gizmos.DrawLine(startPt, endPt); // Attack Range
         Gizmos.color = Color.yellow;
         endPt.x = transform.position.x + _aggroRange * Mathf.Sign(transform.right.x);
         endPt.y += .2f;
         startPt.y = endPt.y;
-        Gizmos.DrawLine(startPt, endPt);
+        Gizmos.DrawLine(startPt, endPt); // Aggro Range
         if (_currentState == EnemyAIState.Roaming)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(_roamTarget, Vector3.one);
         }
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawLine(new Vector3(_wanderCenter.x - _maxWanderDistance, _wanderCenter.y + 5f, 10f), new Vector3(_wanderCenter.x - _maxWanderDistance, _wanderCenter.y - 5f, 10f));
-        Gizmos.DrawLine(new Vector3(_wanderCenter.x + _maxWanderDistance, _wanderCenter.y + 5f, 10f), new Vector3(_wanderCenter.x + _maxWanderDistance, _wanderCenter.y - 5f, 10f));
-        Gizmos.DrawWireCube(_wanderCenter, Vector3.one * 0.3f);
+        if (_movementEnabled)
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawLine(new Vector3(_wanderCenter.x - _maxWanderDistance, _wanderCenter.y + 5f, 10f), new Vector3(_wanderCenter.x - _maxWanderDistance, _wanderCenter.y - 5f, 10f));
+            Gizmos.DrawLine(new Vector3(_wanderCenter.x + _maxWanderDistance, _wanderCenter.y + 5f, 10f), new Vector3(_wanderCenter.x + _maxWanderDistance, _wanderCenter.y - 5f, 10f));
+            Gizmos.DrawWireCube(_wanderCenter, Vector3.one * 0.3f); // wander bounds
+        }
+
+    }
+
+    public void TakeDamage()
+    {
+        if (_currentState == EnemyAIState.Idle || _currentState == EnemyAIState.Roaming)
+        {
+            TransitionTo(EnemyAIState.Aggro);
+        }
     }
 }
 

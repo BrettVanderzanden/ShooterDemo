@@ -82,19 +82,16 @@ public class TNT : MonoBehaviour
         foreach (var hit in hits)
         {
             IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
-            float knockback;
 
             PlayerController pc = hit.gameObject.GetComponent<PlayerController>();
             if (pc)
             {
                 pc.StartTNTKnockback();
-                knockback = _playerKnockbackThrust;
             }
             else
             {
-                knockback = _enemyKnockbackThrust;
+                iDamageable?.TakeKnockback(transform.position, _enemyKnockbackThrust);
             }
-            iDamageable?.TakeKnockback(transform.position, knockback);
         }
     }
 

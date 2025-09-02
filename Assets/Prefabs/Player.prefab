@@ -825,8 +825,10 @@ MonoBehaviour:
   _gravityDelay: 0.2
   _extraGravity: 5000
   _maxFallVelocity: -40
-  _tntKnockbackDuration: 0.2
+  _tntKnockbackDuration: 0.4
   _tntTrailRenderer: {fileID: 5561457944720512382}
+  _lowJumpMultiplier: 2
+  _fallMultiplier: 2.5
 --- !u!114 &2084083494325077376
 MonoBehaviour:
   m_ObjectHideFlags: 0

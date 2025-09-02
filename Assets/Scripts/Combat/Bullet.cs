@@ -7,8 +7,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject _bulletVFX;
     [SerializeField] private float _moveSpeed = 15f;
     [SerializeField] private int _damageAmount = 1;
-    [SerializeField] private float _knockbackThrust = 30;
     [SerializeField] private float _maxLifeTime = 2f;
+    [SerializeField] private float _knockbackThrust = 30;
+    [SerializeField] private float _knockbackTime = .2f;
 
     private Vector2 _fireDirection;
     private Rigidbody2D _rigidBody;
@@ -64,7 +65,7 @@ public class Bullet : MonoBehaviour
 
         IDamageable iDamageable = other.gameObject.GetComponent<IDamageable>();
         iDamageable?.TakeDamage(_damageAmount);
-        iDamageable?.TakeKnockback(transform.position, _knockbackThrust);
+        iDamageable?.TakeKnockback(transform.position, _knockbackThrust, _knockbackTime);
 
         ReleaseBullet();
     }

@@ -44,9 +44,9 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         TakeDamage(_currentHealth);
     }
 
-    public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust)
+    public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust, float knockbackTime)
     {
-        _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);
+        _knockback.GetKnockedBack(damageSourceDir, knockbackThrust, knockbackTime);
     }
 
     public void TakeHit()

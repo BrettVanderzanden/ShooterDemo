@@ -13,10 +13,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _gravityDelay = 0.25f;
     [SerializeField] private float _extraGravity = 1000f;
     [SerializeField] private float _maxFallVelocity = -25f;
-    [SerializeField] private float _tntKnockbackDuration = 0.2f;
     [SerializeField] private TrailRenderer _tntTrailRenderer;
     [SerializeField] private float _lowJumpMultiplier = 2f;
     [SerializeField] private float _fallMultiplier = 2.5f;
+    [SerializeField] private float _slowdownAcceleration = 1f;
 
     private float _moveX;
     private bool _canMove = true;
@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _dashStartPt, _dashEndPt;
     private float _timeInAir;
     private bool _inTNTKnockback = false;
+    private float _tntKnockbackDuration = 0.2f;
 
     private Rigidbody2D _rigidBody;
     private Knockback _knockback;
@@ -98,7 +99,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (!_dashing)
         {
-            Vector2 movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
+            Vector2 movement;
+            if (_moveX == 0 || _inTNTKnockback)
+            {
+                movement = new Vector2(Mathf.MoveTowards(_rigidBody.linearVelocityX, 0f, _slowdownAcceleration * Time.deltaTime), _rigidBody.linearVelocityY);
+            }
+            else
+            {
+                movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
+            }
             _rigidBody.linearVelocity = movement;
         }
         else
@@ -146,12 +155,22 @@ public class PlayerMovement : MonoBehaviour
         _canMove = true;
     }
 
-    public void StartTNTKnockback()
+    public void StartTNTKnockback(Vector3 hitDirection, float knockbackThrust, float knockbackTime)
     {
         _timeInAir = 0f;
         _inTNTKnockback = true;
         _tntTrailRenderer.emitting = true;
+        _tntKnockbackDuration = knockbackTime;
+        ApplyTNTKnockbackForce(hitDirection, knockbackThrust);
         StartCoroutine(TNTKnockbackEnd());
+    }
+
+    private void ApplyTNTKnockbackForce(Vector3 hitDirection, float knockbackThrust)
+    {
+        _rigidBody.linearVelocity = Vector2.zero;
+        Vector3 difference = (transform.position - hitDirection).normalized * knockbackThrust * _rigidBody.mass;
+        Debug.DrawRay(transform.position, difference, Color.red, 1.0f);
+        _rigidBody.AddForce(difference, ForceMode2D.Impulse);
     }
 
     private IEnumerator TNTKnockbackEnd()
@@ -206,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float velY = _rigidBody.linearVelocityY;
 
-        if (!_dashing && !_inTNTKnockback)
+        if (!_dashing)// && !_inTNTKnockback)
         {
             if (!PlayerController.Instance.IsGrounded && _timeInAir > _gravityDelay)
             {

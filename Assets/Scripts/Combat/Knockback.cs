@@ -7,10 +7,9 @@ public class Knockback : MonoBehaviour
     public Action OnKnockBackStart;
     public Action OnKnockBackEnd;
 
-    [SerializeField] private float _knockbackTime = 0.25f;
-
     private Vector3 _hitDirection;
     private float _knockbackThrust;
+    private float _knockbackTime;
 
     private Rigidbody2D _rigidBody;
 
@@ -31,10 +30,11 @@ public class Knockback : MonoBehaviour
         OnKnockBackEnd -= StopKnockbackRoutine;
     }
 
-    public void GetKnockedBack(Vector3 hitDirection, float knockbackThrust)
+    public void GetKnockedBack(Vector3 hitDirection, float knockbackThrust, float knockbackTime)
     {
         _hitDirection = hitDirection;
         _knockbackThrust = knockbackThrust;
+        _knockbackTime = knockbackTime;
 
         OnKnockBackStart?.Invoke();
     }
@@ -42,8 +42,9 @@ public class Knockback : MonoBehaviour
     private void ApplyKnockbackForce()
     {
         _rigidBody.linearVelocity = Vector2.zero;
-        Vector3 difference = (transform.position - _hitDirection).normalized * _knockbackThrust * _rigidBody.mass;
-        //difference.y = 0;
+        Vector2 direction = transform.position - _hitDirection;
+        direction.y = 0; // left or right only
+        Vector3 difference = (direction).normalized * _knockbackThrust * _rigidBody.mass;
         _rigidBody.AddForce(difference, ForceMode2D.Impulse);
         StartCoroutine(KnockbackRoutine());
     }

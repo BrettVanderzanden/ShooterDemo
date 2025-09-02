@@ -55,12 +55,12 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
         }
     }
 
-    public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust)
+    public void TakeKnockback(Vector2 damageSourceDir, float knockbackThrust, float knockbackTime)
     {
         if (knockbackThrust > 0f)
         {
             Debug.Log("Knockback thrust: " + knockbackThrust);
-            _knockback.GetKnockedBack(damageSourceDir, knockbackThrust);
+            _knockback.GetKnockedBack(damageSourceDir, knockbackThrust, knockbackTime);
         }
     }
 

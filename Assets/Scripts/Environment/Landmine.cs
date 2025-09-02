@@ -9,6 +9,7 @@ public class Landmine : MonoBehaviour, IHittable
 
     [SerializeField] private int _damageAmount = 100;
     [SerializeField] private float _knockbackThrust = 10f;
+    [SerializeField] private float _knockbackTime = .2f;
     [SerializeField] private float _damageRadius = 2.5f;
     [SerializeField] private float _detonationDelay = 0.1f;
     [SerializeField] private GameObject _explosionVFX;
@@ -65,7 +66,7 @@ public class Landmine : MonoBehaviour, IHittable
 
             IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
             iDamageable?.TakeDamage( _damageAmount);
-            iDamageable?.TakeKnockback(transform.position, _knockbackThrust);
+            iDamageable?.TakeKnockback(transform.position, _knockbackThrust, _knockbackTime);
         }
     }
 

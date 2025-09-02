@@ -7,7 +7,9 @@ public class TNT : MonoBehaviour
 
     [SerializeField] private float _launchForce = 6f;
     [SerializeField] private float _enemyKnockbackThrust = 10f;
+    [SerializeField] private float _enemyKnockbackTime = .2f;
     [SerializeField] private float _playerKnockbackThrust = 30f;
+    [SerializeField] private float _playerKnockbackTime = .3f;
     [SerializeField] private int _damageAmount = 3;
     [SerializeField] private float _damageRadius = 4f;
     [SerializeField] private float _knockbackRadius = 6f;
@@ -86,11 +88,11 @@ public class TNT : MonoBehaviour
             PlayerController pc = hit.gameObject.GetComponent<PlayerController>();
             if (pc)
             {
-                pc.StartTNTKnockback();
+                pc.StartTNTKnockback(transform.position, _playerKnockbackThrust, _playerKnockbackTime);
             }
             else
             {
-                iDamageable?.TakeKnockback(transform.position, _enemyKnockbackThrust);
+                iDamageable?.TakeKnockback(transform.position, _enemyKnockbackThrust, _enemyKnockbackTime);
             }
         }
     }

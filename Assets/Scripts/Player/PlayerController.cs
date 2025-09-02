@@ -192,9 +192,9 @@ public class PlayerController : Singleton<PlayerController>
         _controlEnabled = true;
     }
 
-    public void StartTNTKnockback()
+    public void StartTNTKnockback(Vector3 hitDirection, float knockbackThrust, float knockbackTime)
     {
-        _movement.StartTNTKnockback();
+        _movement.StartTNTKnockback(hitDirection, knockbackThrust, knockbackTime);
     }
 
     public Vector2 GetCenterPosition()

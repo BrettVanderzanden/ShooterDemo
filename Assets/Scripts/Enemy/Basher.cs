@@ -4,6 +4,7 @@ public class Basher : MonoBehaviour, IEnemy
 {
     [SerializeField] private int _attackDamage = 10;
     [SerializeField] private float _knockbackThrust = 5f;
+    [SerializeField] private float _knockbackTime = .3f;
     [SerializeField] private float _damageRadius = 3f;
     [SerializeField] private Transform _hitboxCenter;
 
@@ -42,7 +43,7 @@ public class Basher : MonoBehaviour, IEnemy
 
             IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
             iDamageable?.TakeDamage(_attackDamage);
-            iDamageable?.TakeKnockback(transform.position, _knockbackThrust);
+            iDamageable?.TakeKnockback(transform.position, _knockbackThrust, _knockbackTime);
         }
     }
 

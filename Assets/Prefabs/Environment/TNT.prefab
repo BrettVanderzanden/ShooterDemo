@@ -105,7 +105,7 @@ MonoBehaviour:
   _launchForce: 10
   _enemyKnockbackThrust: 10
   _enemyKnockbackTime: 0.2
-  _playerKnockbackThrust: 40
+  _playerKnockbackThrust: 30
   _playerKnockbackTime: 0.2
   _damageAmount: 2
   _damageRadius: 2.02

@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private TrailRenderer _tntTrailRenderer;
     [SerializeField] private float _lowJumpMultiplier = 2f;
     [SerializeField] private float _fallMultiplier = 2.5f;
-    [SerializeField] private float _slowdownAcceleration = 1f;
+    [SerializeField] private float _slowdownAcceleration = 100f;
     [SerializeField] private float _dashingInfluence = .3f;
 
     private float _moveX;
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandlePlayerDeath(PlayerHealth health)
     {
         _canMove = false;
-        _rigidBody.constraints = RigidbodyConstraints2D.None;
+        //_rigidBody.constraints = RigidbodyConstraints2D.None;
         //_rigidBody.linearVelocity = Vector2.zero;
     }
 
@@ -241,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (velY < 0f)
             {
-                _rigidBody.AddForce(Vector2.up * Physics2D.gravity.y * (_fallMultiplier - 1) * _rigidBody.mass);
+                //_rigidBody.AddForce(Vector2.up * Physics2D.gravity.y * (_fallMultiplier - 1) * _rigidBody.mass);
             }
 
             if (_rigidBody.linearVelocityY < _maxFallVelocity)

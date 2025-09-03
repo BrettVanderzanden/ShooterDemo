@@ -142,7 +142,6 @@ public class PlayerController : Singleton<PlayerController>
         if (CheckGrounded())
         {
             _coyoteTimer = _coyoteTime;
-            // _doubleJumpAvailable = true;
         }
         else
         {

@@ -82,7 +82,7 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
             IsDead = true;
             // death animation here
             OnDeath?.Invoke(this);
-            GetComponent<BoxCollider2D>().enabled = false;
+            //GetComponent<BoxCollider2D>().enabled = false;
 
             StartCoroutine(DeathLoadSceneRoutine());
         }

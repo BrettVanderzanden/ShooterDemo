@@ -427,7 +427,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 50fac9a4161243643a9f637fbb6e0e4b, type: 2}
+  - {fileID: 2100000, guid: 826e652b4ecdd75429e378f1c6195db7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -829,6 +829,7 @@ MonoBehaviour:
   _lowJumpMultiplier: 2
   _fallMultiplier: 2.5
   _slowdownAcceleration: 100
+  _dashingInfluence: 0.3
 --- !u!114 &2084083494325077376
 MonoBehaviour:
   m_ObjectHideFlags: 0

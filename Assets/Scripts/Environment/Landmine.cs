@@ -12,6 +12,7 @@ public class Landmine : MonoBehaviour, IHittable
     [SerializeField] private float _knockbackTime = .2f;
     [SerializeField] private float _damageRadius = 2.5f;
     [SerializeField] private float _detonationDelay = 0.1f;
+    [SerializeField] private bool _destroyable = true;
     [SerializeField] private GameObject _explosionVFX;
 
     private bool _triggered = false;
@@ -28,9 +29,12 @@ public class Landmine : MonoBehaviour, IHittable
 
     public void TakeHit()
     {
-        // explode instantly from bullets and other explosions
-        _detonationDelay = 0f;
-        TriggerDetonation();
+        if (_destroyable)
+        {
+            // explode instantly from bullets and other explosions
+            _detonationDelay = 0f;
+            TriggerDetonation();
+        }
     }
 
     private void TriggerDetonation()

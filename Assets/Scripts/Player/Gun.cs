@@ -143,7 +143,7 @@ public class Gun : MonoBehaviour
 
     private void ThrowTNTAnimation()
     {
-        _animator.Play(THROW_TNT_HASH, 0, 0f);
+        _animator.Play(FIRE_HASH, 0, 0f);
     }
 
     private void ResetLastFireTime()

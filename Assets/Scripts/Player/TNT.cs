@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TNT : MonoBehaviour
 {
-    public Action OnTNTExplode;
+    public static Action OnTNTExplode;
 
     [SerializeField] private float _launchForce = 6f;
     [SerializeField] private float _enemyKnockbackThrust = 10f;

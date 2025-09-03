@@ -825,10 +825,10 @@ MonoBehaviour:
   _gravityDelay: 0.2
   _extraGravity: 5000
   _maxFallVelocity: -40
-  _tntKnockbackDuration: 0.4
   _tntTrailRenderer: {fileID: 5561457944720512382}
   _lowJumpMultiplier: 2
   _fallMultiplier: 2.5
+  _slowdownAcceleration: 100
 --- !u!114 &2084083494325077376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,7 +855,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860beb45739c4134d8d74f7447cbbeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knockbackTime: 0.2
 --- !u!114 &679963318006607528
 MonoBehaviour:
   m_ObjectHideFlags: 0

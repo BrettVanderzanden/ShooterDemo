@@ -3,6 +3,7 @@ using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // Does this need to be a singleton?
 public class UIManager : Singleton<UIManager>
@@ -10,16 +11,20 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] float _alertCycleTimer = 4f;
 
     List<string> _alertMessages;
-
     TMP_Text _alertText;
     float _alertDeltaTime = 0f;
     int _alertIndex = 0;
     const string ALERT_TEXT = "Alert Text";
 
+    [SerializeField] Image _TNTCooldownImage;
+    [SerializeField] public float _TNTCooldownTime = 1f;
+    private float _TNTtimer = 1f;
+
     protected override void Awake()
     {
         base.Awake();
         _alertMessages = new List<string>();
+        _TNTtimer = _TNTCooldownTime;
     }
 
     private void OnEnable()
@@ -27,6 +32,7 @@ public class UIManager : Singleton<UIManager>
         SceneManager.sceneLoaded += OnLevelLoaded;
         EndPoint.OnExitReached += OnLevelExitReached;
         PlayerHealth.OnDeath += OnPlayerDeath;
+        TNT.OnTNTExplode += OnTNTExplode;
     }
 
     private void OnDisable()
@@ -34,6 +40,7 @@ public class UIManager : Singleton<UIManager>
         SceneManager.sceneLoaded -= OnLevelLoaded;
         EndPoint.OnExitReached -= OnLevelExitReached;
         PlayerHealth.OnDeath -= OnPlayerDeath;
+        TNT.OnTNTExplode -= OnTNTExplode;
     }
 
     private void Start()
@@ -44,6 +51,7 @@ public class UIManager : Singleton<UIManager>
 
     private void Update()
     {
+        UpdateTNTCooldown();
         UpdateAlerts();
     }
 
@@ -107,6 +115,22 @@ public class UIManager : Singleton<UIManager>
     private void OnPlayerDeath(PlayerHealth health)
     {
         AddAlert("You Died!");
+    }
+
+    private void UpdateTNTCooldown()
+    {
+        _TNTtimer += Time.deltaTime;
+        if (_TNTtimer >= _TNTCooldownTime)
+        {
+            _TNTtimer = _TNTCooldownTime;
+        }
+
+        _TNTCooldownImage.fillAmount = _TNTtimer / _TNTCooldownTime;
+    }
+
+    private void OnTNTExplode()
+    {
+        _TNTtimer = 0f;
     }
 
 }

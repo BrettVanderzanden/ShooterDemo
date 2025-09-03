@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _lowJumpMultiplier = 2f;
     [SerializeField] private float _fallMultiplier = 2.5f;
     [SerializeField] private float _slowdownAcceleration = 1f;
+    [SerializeField] private float _dashingInfluence = .3f;
 
     private float _moveX;
     private bool _canMove = true;
@@ -97,22 +98,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!_canMove) { return; }
 
-        if (!_dashing)
+        //if (!_dashing)
         {
-            Vector2 movement;
-            if (_moveX == 0 || _inTNTKnockback)
+            float movementX;
+            if (_moveX == 0)
             {
-                movement = new Vector2(Mathf.MoveTowards(_rigidBody.linearVelocityX, 0f, _slowdownAcceleration * Time.deltaTime), _rigidBody.linearVelocityY);
+                movementX = Mathf.MoveTowards(_rigidBody.linearVelocityX, 0f, _slowdownAcceleration * Time.deltaTime);
+            }
+            else if (_dashing || _inTNTKnockback)
+            {
+                movementX = Mathf.MoveTowards(_rigidBody.linearVelocityX, _moveX, _moveSpeed * _dashingInfluence * Time.deltaTime);
             }
             else
             {
-                movement = new Vector2(_moveX * _moveSpeed, _rigidBody.linearVelocityY);
+                movementX = _moveX * _moveSpeed;
             }
-            _rigidBody.linearVelocity = movement;
-        }
-        else
-        {
-            Debug.Log(_rigidBody.gravityScale);
+            _rigidBody.linearVelocityX = movementX;
         }
     }
 
@@ -167,10 +168,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyTNTKnockbackForce(Vector3 hitDirection, float knockbackThrust)
     {
+        Vector2 centerPos = PlayerController.Instance.GetCenterPosition();
         _rigidBody.linearVelocity = Vector2.zero;
-        Vector3 difference = (transform.position - hitDirection).normalized * knockbackThrust * _rigidBody.mass;
-        Debug.DrawRay(transform.position, difference, Color.red, 1.0f);
+        Vector3 difference = ((Vector3)centerPos - hitDirection).normalized * knockbackThrust * _rigidBody.mass;
         _rigidBody.AddForce(difference, ForceMode2D.Impulse);
+        difference = ((Vector3)centerPos - hitDirection).normalized * knockbackThrust * _rigidBody.mass * .1f; // scale debug ray down
+        Debug.DrawRay(centerPos, difference, Color.red, 1.0f);
     }
 
     private IEnumerator TNTKnockbackEnd()

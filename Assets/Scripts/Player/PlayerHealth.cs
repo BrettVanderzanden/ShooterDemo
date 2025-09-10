@@ -59,7 +59,7 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
     {
         if (knockbackThrust > 0f)
         {
-            Debug.Log("Knockback thrust: " + knockbackThrust);
+            //Debug.Log("Knockback thrust: " + knockbackThrust);
             _knockback.GetKnockedBack(damageSourceDir, knockbackThrust, knockbackTime);
         }
     }

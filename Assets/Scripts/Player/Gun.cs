@@ -14,10 +14,12 @@ public class Gun : MonoBehaviour
     [SerializeField] private Transform _bulletSpawnPoint;
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private float _gunFireCD = 0.5f;
+    [SerializeField] private int _bulletMaxAmmo = 10;
 
     [Header("TNT")]
     [SerializeField] private TNT _tntPrefab;
     [SerializeField] private float _tntThrowCD = 2f;
+    [SerializeField] private int _tntMaxAmmo = 1;
 
     private ObjectPool<Bullet> _bulletPool;
 
@@ -27,6 +29,8 @@ public class Gun : MonoBehaviour
     private float _lastFireTime = 0f;
     private bool _tntIsActive = false;
     private float _lastTNTTime = 0f;
+    private int _bulletAmmo = 10;
+    private int _tntAmmo = 1;
 
     private Animator _animator;
     private PlayerInput _playerInput;
@@ -101,25 +105,25 @@ public class Gun : MonoBehaviour
     {
         if (_frameInput.Shoot && Time.time >= _lastFireTime)
         {
-            OnShoot?.Invoke();
+            PullTrigger();
         }
 
         if (_frameInput.TNT)
         {
-            if (!_tntIsActive)
-            {
-                if (Time.time >= _lastTNTTime)
-                {
-                    _tntIsActive = true;
-                    OnTNTThrow?.Invoke();
-                }
-            }
-            else
-            {
-                _tntIsActive = false;
-                _activeTNT.TriggerDetonation();
-                _lastTNTTime = Time.time + _tntThrowCD;
-            }
+            TryThrowTNT();
+        }
+    }
+
+    private void PullTrigger()
+    {
+        if (_bulletAmmo > 0)
+        {
+            _bulletAmmo--;
+            OnShoot?.Invoke();
+        }
+        else
+        {
+            // no ammo sound
         }
     }
 
@@ -127,6 +131,32 @@ public class Gun : MonoBehaviour
     {
         Bullet newBullet = _bulletPool.Get();
         newBullet.Init(this, _bulletSpawnPoint.position, _mousePos);
+    }
+
+    private void TryThrowTNT()
+    {
+        if (!_tntIsActive)
+        {
+            if (_tntAmmo > 0)
+            {
+                if (Time.time >= _lastTNTTime)
+                {
+                    _tntAmmo--;
+                    _tntIsActive = true;
+                    OnTNTThrow?.Invoke();
+                }
+            }
+            else
+            {
+                // no tnt sound
+            }
+        }
+        else
+        {
+            _tntIsActive = false;
+            _activeTNT.TriggerDetonation();
+            _lastTNTTime = Time.time + _tntThrowCD;
+        }
     }
 
     private void ThrowTNT()
@@ -164,5 +194,11 @@ public class Gun : MonoBehaviour
     {
         Gizmos.color = Color.limeGreen;
         Gizmos.DrawWireSphere(transform.position, 0.1f);
+    }
+
+    public void RefillAmmo()
+    {
+        _bulletAmmo = _bulletMaxAmmo;
+        _tntAmmo = _tntMaxAmmo;
     }
 }

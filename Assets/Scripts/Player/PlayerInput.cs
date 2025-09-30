@@ -40,7 +40,7 @@ public class PlayerInput : MonoBehaviour
         {
             Move = _move.ReadValue<Vector2>(),
             Jump = _jump.IsPressed(),
-            Shoot = _shoot.IsPressed(),
+            Shoot = _shoot.triggered,
             Dash = _dash.triggered,
             TNT = _tnt.triggered,
         };

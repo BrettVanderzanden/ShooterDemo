@@ -14,7 +14,7 @@ TagManager:
   - Player
   - Enemy
   - Ground
-  - 
+  - Pickup
   - Aggro
   - Player Attack
   - Enemy Attack

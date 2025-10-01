@@ -63,6 +63,7 @@ public class Gun : MonoBehaviour
         OnShoot += FireAnimation;
         OnTNTThrow += ThrowTNT;
         OnTNTThrow += ThrowTNTAnimation;
+        PlayerController.OnAmmoPickup += RefillAmmo;
     }
 
     private void OnDisable()
@@ -72,6 +73,7 @@ public class Gun : MonoBehaviour
         OnShoot -= FireAnimation;
         OnTNTThrow -= ThrowTNT;
         OnTNTThrow -= ThrowTNTAnimation;
+        PlayerController.OnAmmoPickup -= RefillAmmo;
     }
 
     private void GatherInput()
@@ -196,7 +198,7 @@ public class Gun : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 0.1f);
     }
 
-    public void RefillAmmo()
+    private void RefillAmmo()
     {
         _bulletAmmo = _bulletMaxAmmo;
         _tntAmmo = _tntMaxAmmo;

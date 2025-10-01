@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,7 @@ public class PlayerController : Singleton<PlayerController>
 
     public static Action OnJump;
     public static Action OnDash;
+    public static Action OnAmmoPickup;
 
     [SerializeField] private Transform _feetTransform;
     [SerializeField] private Vector2 _groundCheck;
@@ -205,5 +207,15 @@ public class PlayerController : Singleton<PlayerController>
         center.y += bodycollider.offset.y * transform.localScale.y;
 
         return center;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Pickup")
+        {
+            Destroy(collision.gameObject);
+            OnAmmoPickup?.Invoke();
+            Debug.Log("Ammo picked up");
+        }
     }
 }

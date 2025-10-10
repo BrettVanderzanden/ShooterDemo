@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      dynamiteCooldownFill_0: 1706423829860755682
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

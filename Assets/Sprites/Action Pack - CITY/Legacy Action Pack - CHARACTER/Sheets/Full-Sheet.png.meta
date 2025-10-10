@@ -1122,7 +1122,47 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Full-Sheet_0: -7652614544596042118
+      Full-Sheet_1: 1532568719414979114
+      Full-Sheet_10: -5781123280640993618
+      Full-Sheet_11: 3931264788604858522
+      Full-Sheet_12: -5749562015698107456
+      Full-Sheet_13: 250229385487616402
+      Full-Sheet_14: 7976922130310951902
+      Full-Sheet_15: 501938698983604067
+      Full-Sheet_16: 2246595127448055662
+      Full-Sheet_17: -5069627018416557404
+      Full-Sheet_18: -1760343112595668640
+      Full-Sheet_19: 9125143062193890174
+      Full-Sheet_2: 3620850101537187972
+      Full-Sheet_20: 5008828088255472
+      Full-Sheet_21: -1100833101847551760
+      Full-Sheet_22: 3099968833024229261
+      Full-Sheet_23: -2440596583629093452
+      Full-Sheet_24: 7397961615762955624
+      Full-Sheet_25: 6360354453840246642
+      Full-Sheet_26: -5893320098848939377
+      Full-Sheet_27: -7501316367684263038
+      Full-Sheet_28: 2644639233623061728
+      Full-Sheet_29: -8153400170650339479
+      Full-Sheet_3: 8328823353160947215
+      Full-Sheet_30: 2383870923981030770
+      Full-Sheet_31: -4637216149946214784
+      Full-Sheet_32: 2734375415168904628
+      Full-Sheet_33: 6522309282345452540
+      Full-Sheet_34: -3887421654373051373
+      Full-Sheet_35: -1655114412609524474
+      Full-Sheet_36: -7016591454389440619
+      Full-Sheet_37: 3191501323632834275
+      Full-Sheet_38: -9012350465416483807
+      Full-Sheet_39: -394082071170836933
+      Full-Sheet_4: -3315431195844602524
+      Full-Sheet_5: 575070401052134876
+      Full-Sheet_6: -4555635247374997285
+      Full-Sheet_7: 1809701934936696292
+      Full-Sheet_8: 3970203781742089964
+      Full-Sheet_9: 4510679638026497896
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

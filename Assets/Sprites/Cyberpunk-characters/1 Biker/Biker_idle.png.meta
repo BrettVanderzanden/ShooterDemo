@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Biker_idle_0: -181828907702267046
+      Biker_idle_1: -5276250086338837625
+      Biker_idle_2: 1588335839631089550
+      Biker_idle_3: 3203990619637221514
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cyborg_idle_0: -8019239915147560276
+      Cyborg_idle_1: -6526221278753614019
+      Cyborg_idle_2: -1626806750166959302
+      Cyborg_idle_3: 7969078075045196988
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

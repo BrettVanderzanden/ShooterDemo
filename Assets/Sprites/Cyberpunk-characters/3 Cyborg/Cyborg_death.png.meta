@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Cyborg_death_0: 3628204691264593538
+      Cyborg_death_1: -2315445908061371068
+      Cyborg_death_2: -4600304776752006765
+      Cyborg_death_3: 5649927140825343273
+      Cyborg_death_4: 4002782948548970526
+      Cyborg_death_5: 1743679609081587897
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

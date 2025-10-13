@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class AmmoPickup : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    Animator _pickupAnimator;
+    private static readonly int HOVER_HASH = Animator.StringToHash("Hover");
+
+    private void Awake()
+    {
+        _pickupAnimator = GetComponent<Animator>();
+    }
+    
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        _pickupAnimator.Play(HOVER_HASH, 0, 0f);
     }
 }

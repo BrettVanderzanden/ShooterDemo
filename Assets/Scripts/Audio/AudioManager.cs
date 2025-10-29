@@ -15,12 +15,40 @@ public class AudioManager : Singleton<AudioManager>
     #region Unity Methods
     private void OnEnable()
     {
+        PlayerController.OnJump += PlayerJump;
+        PlayerController.OnDash += PlayerDash;
+        PlayerHealth.OnTakeDamage += HandlePlayerTakeDamage;
+        PlayerHealth.OnDeath += HandlePlayerDeath;
+        Gun.OnShoot += GunShoot;
+        Gun.OnShootEmpty += GunShootEmpty;
+        Gun.OnTNTThrow += TNTThrow;
+        Gun.OnTNTThrowFail += TNTThrowFail;
+        TNT.OnTNTExplode += TNTExplode;
+        PlayerController.OnAmmoPickup += AmmoRefill;
         Target.OnTargetBreak += HandleTargetBreak;
+        Landmine.OnLandmineArmed += LandmineArm;
+        Landmine.OnLandmineExplode += LandmineExplode;
+        Bullet.OnBulletHitFlesh += BulletHitFlesh;
+        Bullet.OnBulletHitSolid += BulletHitSolid;
     }
 
     private void OnDisable()
     {
+        PlayerController.OnJump -= PlayerJump;
+        PlayerController.OnDash -= PlayerDash;
+        PlayerHealth.OnTakeDamage -= HandlePlayerTakeDamage;
+        PlayerHealth.OnDeath -= HandlePlayerDeath;
+        Gun.OnShoot -= GunShoot;
+        Gun.OnShootEmpty -= GunShootEmpty;
+        Gun.OnTNTThrow -= TNTThrow;
+        Gun.OnTNTThrowFail -= TNTThrowFail;
+        TNT.OnTNTExplode -= TNTExplode;
+        PlayerController.OnAmmoPickup -= AmmoRefill;
         Target.OnTargetBreak -= HandleTargetBreak;
+        Landmine.OnLandmineArmed -= LandmineArm;
+        Landmine.OnLandmineExplode -= LandmineExplode;
+        Bullet.OnBulletHitFlesh -= BulletHitFlesh;
+        Bullet.OnBulletHitSolid -= BulletHitSolid;
     }
 
     #endregion
@@ -96,19 +124,161 @@ public class AudioManager : Singleton<AudioManager>
     #endregion
 
     #region SFX
+    #region Player
+    public void PlayerMove()
+    {
+        PlayRandomSound(_soundsCollectionSO.PlayerMove);
+    }
+
+    public void PlayerJump()
+    {
+        PlayRandomSound(_soundsCollectionSO.PlayerJump);
+    }
+
+    public void PlayerLand()
+    {
+        PlayRandomSound(_soundsCollectionSO.PlayerLand);
+    }
+
+    public void PlayerDash()
+    {
+        PlayRandomSound(_soundsCollectionSO.PlayerDash);
+    }
+
+    public void PlayerTakeDamage()
+    {
+        PlayRandomSound(_soundsCollectionSO.PlayerTakeDamage);
+    }
+
+    public void PlayerDeath()
+    {
+        PlayRandomSound(_soundsCollectionSO.PlayerDeath);
+    }
+
+    public void GunShoot()
+    {
+        PlayRandomSound(_soundsCollectionSO.GunShoot);
+    }
+
+    public void GunShootEmpty()
+    {
+        PlayRandomSound(_soundsCollectionSO.GunShootEmpty);
+    }
+
+    public void TNTThrow()
+    {
+        PlayRandomSound(_soundsCollectionSO.TNTThrow);
+    }
+
+    public void TNTThrowFail()
+    {
+        PlayRandomSound(_soundsCollectionSO.TNTThrowFail);
+    }
+
+    public void TNTExplode()
+    {
+        PlayRandomSound(_soundsCollectionSO.TNTExplode);
+    }
+
+    public void AmmoRefill()
+    {
+        PlayRandomSound(_soundsCollectionSO.AmmoRefill);
+    }
+    #endregion // Player
+    #region Enemies
+    public void EnemyAlert()
+    {
+        PlayRandomSound(_soundsCollectionSO.EnemyAlert);
+    }
+
+    public void EnemyTakeDamage()
+    {
+        
+    }
+
+    public void BasherMove()
+    {
+        PlayRandomSound(_soundsCollectionSO.BasherMove);
+    }
+
+    public void BasherAttack()
+    {
+        PlayRandomSound(_soundsCollectionSO.BasherAttack);
+    }
+
+    public void BasherHit()
+    {
+        PlayRandomSound(_soundsCollectionSO.BasherHit);
+    }
+
+    public void BasherDeath()
+    {
+        PlayRandomSound(_soundsCollectionSO.BasherDeath);
+    }
+
+    public void PistolerMove()
+    {
+        PlayRandomSound(_soundsCollectionSO.PistolerMove);
+    }
+
+    public void PistolerShoot()
+    {
+        PlayRandomSound(_soundsCollectionSO.PistolerShoot);
+    }
+
+    public void PistolerDeath()
+    {
+        PlayRandomSound(_soundsCollectionSO.PistolerDeath);
+    }
+    #endregion // Enemies
+
+    #region Environment
     public void Target_OnBreak()
     {
         PlayRandomSound(_soundsCollectionSO.TargetBreak);
     }
-    #endregion
+
+    public void LandmineArm()
+    {
+        PlayRandomSound(_soundsCollectionSO.LandmineArm);
+    }
+
+    public void LandmineExplode()
+    {
+        PlayRandomSound(_soundsCollectionSO.LandmineExplode);
+    }
+
+    public void BulletHitFlesh()
+    {
+        PlayRandomSound(_soundsCollectionSO.BulletHitFlesh);
+    }
+
+    public void BulletHitSolid()
+    {
+        PlayRandomSound(_soundsCollectionSO.BulletHitSolid);
+    }
+    #endregion // Environment
+
+    #endregion // SFX
 
     #region Music
-    #endregion
+    #endregion // Music
 
     #region CustomSFXLogic
     private void HandleTargetBreak(Target target)
     {
         Target_OnBreak();
     }
-    #endregion
+
+    private void HandlePlayerTakeDamage(PlayerHealth health)
+    {
+        PlayerTakeDamage();
+    }
+
+    private void HandlePlayerDeath(PlayerHealth health)
+    {
+        PlayerDeath();
+    }
+
+    #endregion // CustomSFXLogic
 }

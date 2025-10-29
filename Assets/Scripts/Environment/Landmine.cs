@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Landmine : MonoBehaviour, IHittable
 {
-    public Action OnLandmineArmed;
-    public Action OnLandmineExplode;
+    public static Action OnLandmineArmed;
+    public static Action OnLandmineExplode;
 
     [SerializeField] private int _damageAmount = 100;
     [SerializeField] private float _knockbackThrust = 10f;

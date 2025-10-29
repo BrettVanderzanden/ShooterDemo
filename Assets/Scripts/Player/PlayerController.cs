@@ -11,6 +11,7 @@ public class PlayerController : Singleton<PlayerController>
     public bool IsJumpHeld { get; private set; }
 
     public static Action OnJump;
+    public static Action OnLand;
     public static Action OnDash;
     public static Action OnAmmoPickup;
 
@@ -28,6 +29,8 @@ public class PlayerController : Singleton<PlayerController>
     private PlayerInput _playerInput;
     private FrameInput _frameInput;
     private FrameInput _previousFrameInput;
+    private DebugFrameInput _debugFrameInput;
+
     private PlayerMovement _movement;
     private Collider2D _isGrounded;
     private Vector3 _defaultScenePlacement;
@@ -74,11 +77,17 @@ public class PlayerController : Singleton<PlayerController>
     {
         GatherInput();
         Movement();
+        //bool previousAirbornestate = !_isGrounded;
         _isGrounded = Physics2D.OverlapBox(_feetTransform.position, _groundCheck, 0f, _groundLayer);
+        // if (previousAirbornestate == true && _isGrounded)
+        // {
+        //     OnLand?.Invoke();
+        // }
         CoyoteTimer();
         HandleJump();
         HandleDash();
         HandleSpriteFlip();
+        HandleDebugInput();
         IsJumpHeld = _frameInput.Jump;
         _previousFrameInput = _frameInput;
     }
@@ -110,6 +119,8 @@ public class PlayerController : Singleton<PlayerController>
         {
             _frameInput = default;
         }
+
+        _debugFrameInput = _playerInput.DebugFrameInput;
     }
 
     private void Movement()
@@ -180,6 +191,14 @@ public class PlayerController : Singleton<PlayerController>
         else
         {
             transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+    }
+
+    private void HandleDebugInput()
+    {
+        if (_debugFrameInput.Reload)
+        {
+            OnAmmoPickup?.Invoke();
         }
     }
 

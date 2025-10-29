@@ -7,7 +7,7 @@ public class AmmoPickup : MonoBehaviour
 
     private void Awake()
     {
-        _pickupAnimator = GetComponent<Animator>();
+        _pickupAnimator = GetComponentInChildren<Animator>();
     }
     
     void Start()

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4a915934bccbd74f9316bd2881f5fd4, type: 3}
-  m_Name: Ammo Pickup
+  m_Name: Bullet Hit Solid
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 1d288f8753db8384ead6d96cdf73e5a3, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

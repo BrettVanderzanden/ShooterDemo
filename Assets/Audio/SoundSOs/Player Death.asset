@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Death
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: dc8cc758ac79db94fa097ea1b411f3b1, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

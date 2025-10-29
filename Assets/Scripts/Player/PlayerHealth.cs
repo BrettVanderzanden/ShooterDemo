@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
 {
+    public static Action<PlayerHealth> OnTakeDamage;
     public static Action<PlayerHealth> OnDeath;
     public bool IsDead { get; private set; }
 
@@ -42,6 +43,8 @@ public class PlayerHealth : Singleton<PlayerHealth>, IDamageable
             _canTakeDamage = false;
         }
         _currentHealth -= damageAmount;
+
+        OnTakeDamage?.Invoke(this);
 
         UpdateHealthSlider();
 

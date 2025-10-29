@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Landmine Arm
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 5cf109970f1ab1f46ad8c8ce8d24a4b0, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

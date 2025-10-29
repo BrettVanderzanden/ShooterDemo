@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public static Action OnBulletHitFlesh;
+    public static Action OnBulletHitSolid;
+
     [SerializeField] private GameObject _bulletVFX;
     [SerializeField] private float _moveSpeed = 15f;
     [SerializeField] private int _damageAmount = 1;
@@ -67,6 +71,14 @@ public class Bullet : MonoBehaviour
         iDamageable?.TakeDamage(_damageAmount);
         iDamageable?.TakeKnockback(transform.position, _knockbackThrust, _knockbackTime);
 
+        if (iDamageable != null)
+        {
+            OnBulletHitFlesh?.Invoke();
+        }
+        else
+        {
+            OnBulletHitSolid?.Invoke();
+        }
         ReleaseBullet();
     }
 

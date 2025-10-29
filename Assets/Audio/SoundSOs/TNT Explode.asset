@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TNT Explode
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: a646361f66a78d149aa7c968057f072f, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

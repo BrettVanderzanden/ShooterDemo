@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TNT Throw Fail
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: b94476c32c409c248ab1dd2fdae46344, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

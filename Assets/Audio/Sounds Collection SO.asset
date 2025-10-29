@@ -12,5 +12,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad8ac786729b1e4b942166a5dea460c, type: 3}
   m_Name: Sounds Collection SO
   m_EditorClassIdentifier: 
+  MenuMusic:
+  - {fileID: 11400000, guid: 69f244f8f2bb81e47a93f4ca860d9e31, type: 2}
+  LevelMusic:
+  - {fileID: 11400000, guid: 9cb88832b0374d94f8e803185cc2b2fa, type: 2}
+  CelebrationMusic:
+  - {fileID: 11400000, guid: 85235929e505f644d885d26a8fb7e5b4, type: 2}
+  PlayerMove:
+  - {fileID: 11400000, guid: 4bf70dca3c3f34648b913baa1999c6fc, type: 2}
+  PlayerJump:
+  - {fileID: 11400000, guid: 3dbe12c7ddefa3b41a594618cb78fac8, type: 2}
+  PlayerLand:
+  - {fileID: 11400000, guid: b868253bee615e14c99da9c13f1a910d, type: 2}
+  PlayerDash:
+  - {fileID: 11400000, guid: 7b3dcc65a399aec41a590ac54ac65305, type: 2}
+  PlayerTakeDamage:
+  - {fileID: 11400000, guid: b1d06da15a9cbc4449fadb79f271b2a0, type: 2}
+  PlayerDeath:
+  - {fileID: 11400000, guid: f3cedffcb54db744b8b1d0a7bcb7af65, type: 2}
+  GunShoot:
+  - {fileID: 11400000, guid: 94d14226616abbc4b8d9ba8ff243b713, type: 2}
+  GunShootEmpty:
+  - {fileID: 11400000, guid: 97783e13bc8b59a44ac0394d9651bb08, type: 2}
+  TNTThrow:
+  - {fileID: 11400000, guid: 919855ea2d4e696449f5f7703ac2ba95, type: 2}
+  TNTThrowFail:
+  - {fileID: 11400000, guid: eebf63cf894213b4d9904505e4b3f4df, type: 2}
+  TNTExplode:
+  - {fileID: 11400000, guid: 1b65e5831296b5a42957e96a2a663fc2, type: 2}
+  TNTBoost:
+  - {fileID: 11400000, guid: 17f3c1116aa0a5143813a3cfab953736, type: 2}
+  AmmoRefill:
+  - {fileID: 11400000, guid: f78418cf6cc9cb840a1892e7839ae180, type: 2}
+  EnemyAlert:
+  - {fileID: 11400000, guid: 62a955703084fa74e8846c84b3b43d30, type: 2}
+  EnemyTakeDamage: []
+  BasherMove:
+  - {fileID: 11400000, guid: a8346cd1e64fcc647bd1b969139d44d4, type: 2}
+  BasherAttack:
+  - {fileID: 11400000, guid: 159fe095725f1de4d8af95ade6d9c620, type: 2}
+  BasherHit:
+  - {fileID: 11400000, guid: 329fa702033b4bd41a4e67f12c31a9b6, type: 2}
+  BasherDeath:
+  - {fileID: 11400000, guid: 6e50dc57674b34f4d8a1ca91f15a1f13, type: 2}
+  PistolerMove:
+  - {fileID: 11400000, guid: 4bf70dca3c3f34648b913baa1999c6fc, type: 2}
+  PistolerShoot:
+  - {fileID: 11400000, guid: 5fff9db4a5e7da546bd6ac6e6cf9edf9, type: 2}
+  PistolerDeath:
+  - {fileID: 11400000, guid: d0b175e857e2ae4478f5eab458a1b48a, type: 2}
   TargetBreak:
   - {fileID: 11400000, guid: 7dfbfb98a4be6e642a13534a2647eaeb, type: 2}
+  LandmineArm:
+  - {fileID: 11400000, guid: 10d5910589119734c9a73bd984d9b606, type: 2}
+  LandmineExplode:
+  - {fileID: 11400000, guid: 72e1fa311c40f5d4aa6a739ab47fb6df, type: 2}
+  BulletHitFlesh:
+  - {fileID: 11400000, guid: 0ef71d03c46d3eb4c898dd4162b81f6a, type: 2}
+  BulletHitSolid:
+  - {fileID: 11400000, guid: 1ba2369de2b454c44a81c46d5d6d6fcf, type: 2}

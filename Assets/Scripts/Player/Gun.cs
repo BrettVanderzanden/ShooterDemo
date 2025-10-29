@@ -8,7 +8,9 @@ using UnityEngine.InputSystem;
 public class Gun : MonoBehaviour
 {
     public static Action OnShoot;
+    public static Action OnShootEmpty;
     public static Action OnTNTThrow;
+    public static Action OnTNTThrowFail;
 
     [Header("Bullet")]
     [SerializeField] private Transform _bulletSpawnPoint;
@@ -126,6 +128,7 @@ public class Gun : MonoBehaviour
         else
         {
             // no ammo sound
+            OnShootEmpty?.Invoke();
         }
     }
 
@@ -151,6 +154,7 @@ public class Gun : MonoBehaviour
             else
             {
                 // no tnt sound
+                OnTNTThrowFail?.Invoke();
             }
         }
         else

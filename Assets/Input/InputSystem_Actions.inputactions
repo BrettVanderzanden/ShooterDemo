@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -302,6 +303,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "TNT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Debug",
+            "id": "b9398d61-1bbd-4a66-a030-ac74ba324c5b",
+            "actions": [
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "f21d6b0d-7d32-4820-9fb9-9043e0ddda7d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "46dedeed-72d6-4e68-b13a-1c4acf0a54c9",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

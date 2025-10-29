@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Player Jump
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 9366b8fa10a38264eaf5e9701aaa8720, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

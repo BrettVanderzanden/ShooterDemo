@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour, IDamageable
 {
+    public static Action<EnemyHealth> OnTakeDamage;
     public static Action<EnemyHealth> OnDeath;
 
     [SerializeField] private int _startingHealth = 100;

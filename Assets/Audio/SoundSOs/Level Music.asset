@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a915934bccbd74f9316bd2881f5fd4, type: 3}
   m_Name: Level Music
   m_EditorClassIdentifier: 
-  AudioType: 0
+  AudioType: 1
   Clip: {fileID: 0}
   Loop: 0
   RandomizePitch: 0

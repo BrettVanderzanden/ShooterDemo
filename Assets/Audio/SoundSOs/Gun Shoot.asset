@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gun Shoot
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 1e5af07897d23fe4794a70ed129af75c, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

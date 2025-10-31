@@ -41,4 +41,5 @@ public class SoundsCollectionSO : ScriptableObject
     public SoundSO[] LandmineExplode;
     public SoundSO[] BulletHitFlesh;
     public SoundSO[] BulletHitSolid;
+    public SoundSO[] LevelComplete;
 }

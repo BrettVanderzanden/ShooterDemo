@@ -30,6 +30,7 @@ public class AudioManager : Singleton<AudioManager>
         Landmine.OnLandmineExplode += LandmineExplode;
         Bullet.OnBulletHitFlesh += BulletHitFlesh;
         Bullet.OnBulletHitSolid += BulletHitSolid;
+        EndPoint.OnExitReached += LevelComplete;
     }
 
     private void OnDisable()
@@ -256,6 +257,11 @@ public class AudioManager : Singleton<AudioManager>
     public void BulletHitSolid()
     {
         PlayRandomSound(_soundsCollectionSO.BulletHitSolid);
+    }
+
+    public void LevelComplete()
+    {
+        PlayRandomSound(_soundsCollectionSO.LevelComplete);
     }
     #endregion // Environment
 

@@ -25,6 +25,13 @@ public class AudioManager : Singleton<AudioManager>
         Gun.OnTNTThrowFail += TNTThrowFail;
         TNT.OnTNTExplode += TNTExplode;
         PlayerController.OnAmmoPickup += AmmoRefill;
+        EnemyAI.EnemyAggro += EnemyAlert;
+        EnemyHealth.OnTakeDamage += HandleEnemyTakeDamage;
+        EnemyHealth.OnDeath += HandleEnemyDeath;
+        Basher.BasherAttack += BasherAttack;
+        Basher.BasherHit += BasherHit;
+        Shooter.PistolerShoot += PistolerShoot;
+        Gunner.GunnerShoot += GunnerShoot;
         Target.OnTargetBreak += HandleTargetBreak;
         Landmine.OnLandmineArmed += LandmineArm;
         Landmine.OnLandmineExplode += LandmineExplode;
@@ -45,11 +52,19 @@ public class AudioManager : Singleton<AudioManager>
         Gun.OnTNTThrowFail -= TNTThrowFail;
         TNT.OnTNTExplode -= TNTExplode;
         PlayerController.OnAmmoPickup -= AmmoRefill;
+        EnemyAI.EnemyAggro -= EnemyAlert;
+        EnemyHealth.OnTakeDamage -= HandleEnemyTakeDamage;
+        EnemyHealth.OnDeath -= HandleEnemyDeath;
+        Basher.BasherAttack -= BasherAttack;
+        Basher.BasherHit -= BasherHit;
+        Shooter.PistolerShoot -= PistolerShoot;
+        Gunner.GunnerShoot -= GunnerShoot;
         Target.OnTargetBreak -= HandleTargetBreak;
         Landmine.OnLandmineArmed -= LandmineArm;
         Landmine.OnLandmineExplode -= LandmineExplode;
         Bullet.OnBulletHitFlesh -= BulletHitFlesh;
         Bullet.OnBulletHitSolid -= BulletHitSolid;
+        EndPoint.OnExitReached -= LevelComplete;
     }
 
     #endregion
@@ -194,7 +209,12 @@ public class AudioManager : Singleton<AudioManager>
 
     public void EnemyTakeDamage()
     {
-        
+        PlayRandomSound(_soundsCollectionSO.EnemyTakeDamage);
+    }
+
+    public void EnemyDeath()
+    {
+        PlayRandomSound(_soundsCollectionSO.EnemyDeath);
     }
 
     public void BasherMove()
@@ -230,6 +250,11 @@ public class AudioManager : Singleton<AudioManager>
     public void PistolerDeath()
     {
         PlayRandomSound(_soundsCollectionSO.PistolerDeath);
+    }
+
+    public void GunnerShoot()
+    {
+        PlayRandomSound(_soundsCollectionSO.GunnerShoot);
     }
     #endregion // Enemies
 
@@ -284,6 +309,16 @@ public class AudioManager : Singleton<AudioManager>
     private void HandlePlayerDeath(PlayerHealth health)
     {
         PlayerDeath();
+    }
+
+    private void HandleEnemyTakeDamage(EnemyHealth health)
+    {
+        EnemyTakeDamage();
+    }
+
+    private void HandleEnemyDeath(EnemyHealth health)
+    {
+        EnemyDeath();
     }
 
     #endregion // CustomSFXLogic

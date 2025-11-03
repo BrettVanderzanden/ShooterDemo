@@ -46,7 +46,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f78418cf6cc9cb840a1892e7839ae180, type: 2}
   EnemyAlert:
   - {fileID: 11400000, guid: 62a955703084fa74e8846c84b3b43d30, type: 2}
-  EnemyTakeDamage: []
+  EnemyTakeDamage:
+  - {fileID: 11400000, guid: 0e5570caf01ff8f41a56e993c14b0408, type: 2}
+  EnemyDeath:
+  - {fileID: 11400000, guid: 6c75a3fa02e3ba848b41df661bb04ee1, type: 2}
   BasherMove:
   - {fileID: 11400000, guid: a8346cd1e64fcc647bd1b969139d44d4, type: 2}
   BasherAttack:
@@ -61,6 +64,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5fff9db4a5e7da546bd6ac6e6cf9edf9, type: 2}
   PistolerDeath:
   - {fileID: 11400000, guid: d0b175e857e2ae4478f5eab458a1b48a, type: 2}
+  GunnerShoot:
+  - {fileID: 11400000, guid: 48318093ef5fb784d9f6d225c020d360, type: 2}
   TargetBreak:
   - {fileID: 11400000, guid: 7dfbfb98a4be6e642a13534a2647eaeb, type: 2}
   LandmineArm:
@@ -71,3 +76,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ef71d03c46d3eb4c898dd4162b81f6a, type: 2}
   BulletHitSolid:
   - {fileID: 11400000, guid: 1ba2369de2b454c44a81c46d5d6d6fcf, type: 2}
+  LevelComplete:
+  - {fileID: 11400000, guid: 261800d93cf40d74c866631b5c096739, type: 2}

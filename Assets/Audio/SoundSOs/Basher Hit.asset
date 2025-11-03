@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Basher Hit
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 0545674759890f049b814b2b88494bfb, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

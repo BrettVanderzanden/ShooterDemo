@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pistoler Shoot
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: 1d84933efaea5a54abe484cb3e60eee2, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

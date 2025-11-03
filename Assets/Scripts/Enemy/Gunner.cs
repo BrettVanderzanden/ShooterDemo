@@ -3,6 +3,8 @@ using UnityEngine.Pool;
 
 public class Gunner : MonoBehaviour, IEnemy
 {
+    public static System.Action GunnerShoot;
+
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Transform _bulletSpawnPoint;
     [SerializeField] private GameObject _Gun;
@@ -69,6 +71,7 @@ public class Gunner : MonoBehaviour, IEnemy
 
         Bullet newBullet = _bulletPool.Get();
         newBullet.Init(this, _bulletSpawnPoint.position, bulletDirection);
+        GunnerShoot?.Invoke();
 
         Debug.DrawRay(_bulletSpawnPoint.position, bulletDirection, Color.green, 0.2f);
     }
@@ -98,7 +101,6 @@ public class Gunner : MonoBehaviour, IEnemy
         float spread = Random.Range(-_accuracyDeviation, _accuracyDeviation);
         Quaternion spreadRotation = Quaternion.Euler(0f, 0f, spread);
         return spreadRotation * _targetDir;//.normalized;
-
     }
 
     private void OnDrawGizmos()

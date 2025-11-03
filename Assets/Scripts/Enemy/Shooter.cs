@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class Shooter : MonoBehaviour, IEnemy
 {
+    public static Action PistolerShoot;
+
     [SerializeField] private Bullet _bulletPrefab;
     [SerializeField] private Transform _bulletSpawnPoint;
 
@@ -47,6 +50,8 @@ public class Shooter : MonoBehaviour, IEnemy
 
         Bullet newBullet = _bulletPool.Get();
         newBullet.Init(this, _bulletSpawnPoint.position, targetDir);
+
+        PistolerShoot?.Invoke();
     }
 
     public void StartCombat()

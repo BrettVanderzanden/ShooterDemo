@@ -33,6 +33,8 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         _currentHealth -= dmg;
         _enemyAI.TakeDamage();
 
+        OnTakeDamage?.Invoke(this);
+
         if (_currentHealth <= 0)
         {
             OnDeath?.Invoke(this);

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public static System.Action EnemyAggro;
+
     public EnemyAIState CurrentState => _currentState;
 
     [SerializeField] private MonoBehaviour _enemyType;
@@ -222,6 +224,7 @@ public class EnemyAI : MonoBehaviour
         // play aggro animation
         _animations.Idle();
         _enemyPathfinding.SetAggroState(true);
+        EnemyAggro?.Invoke();
         _alertObj.SetActive(true);
     }
 

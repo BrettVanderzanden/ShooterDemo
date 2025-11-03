@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level Complete
   m_EditorClassIdentifier: 
   AudioType: 0
-  Clip: {fileID: 0}
+  Clip: {fileID: 8300000, guid: a8dfe035332575a4da43f7eb394398e2, type: 3}
   Loop: 0
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1

@@ -18,4 +18,4 @@ MonoBehaviour:
   RandomizePitch: 0
   RandomPitchRangeModifier: 0.1
   Volume: 1
-  Pitch: 1
+  Pitch: 0.33

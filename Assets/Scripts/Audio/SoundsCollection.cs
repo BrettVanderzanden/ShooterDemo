@@ -27,6 +27,7 @@ public class SoundsCollectionSO : ScriptableObject
     [Header("Enemies")]
     public SoundSO[] EnemyAlert;
     public SoundSO[] EnemyTakeDamage;
+    public SoundSO[] EnemyDeath;
     public SoundSO[] BasherMove;
     public SoundSO[] BasherAttack;
     public SoundSO[] BasherHit;
@@ -34,6 +35,7 @@ public class SoundsCollectionSO : ScriptableObject
     public SoundSO[] PistolerMove;
     public SoundSO[] PistolerShoot;
     public SoundSO[] PistolerDeath;
+    public SoundSO[] GunnerShoot;
     
     [Header("Environment")]
     public SoundSO[] TargetBreak;

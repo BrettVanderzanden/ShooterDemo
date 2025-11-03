@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _extraGravity = 1000f;
     [SerializeField] private float _maxFallVelocity = -25f;
     [SerializeField] private TrailRenderer _tntTrailRenderer;
+    [SerializeField] private TrailRenderer _dashTrailRenderer;
     [SerializeField] private float _lowJumpMultiplier = 2f;
     [SerializeField] private float _fallMultiplier = 2.5f;
     [SerializeField] private float _slowdownAcceleration = 100f;
@@ -134,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         _dashTime = _dashDuration;
         //_rigidBody.gravityScale = 0f;
         _dashStartPt = transform.position;
+        _dashTrailRenderer.emitting = true;
         StartCoroutine(DashEnd());
     }
 
@@ -142,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(_dashDuration);
         _rigidBody.gravityScale = _defaultGravityScale;
         _dashEndPt = transform.position;
+        _dashTrailRenderer.emitting = false;
     }
 
     private void KnockbackStart()

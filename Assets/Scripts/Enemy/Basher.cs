@@ -1,7 +1,11 @@
+using System;
 using UnityEngine;
 
 public class Basher : MonoBehaviour, IEnemy
 {
+    public static Action BasherAttack;
+    public static Action BasherHit;
+
     [SerializeField] private int _attackDamage = 10;
     [SerializeField] private float _knockbackThrust = 5f;
     [SerializeField] private float _knockbackTime = .3f;
@@ -19,7 +23,7 @@ public class Basher : MonoBehaviour, IEnemy
 
     public void Attack()
     {
-        // attack handled in animation
+        BasherAttack?.Invoke();
     }
 
     public void StartCombat()
@@ -37,6 +41,8 @@ public class Basher : MonoBehaviour, IEnemy
         foreach (var hit in _attackHits)
         {
             Debug.Log("Basher Deal Damage hit");
+
+            BasherHit?.Invoke();
 
             IHittable iHittable = hit.gameObject.GetComponent<IHittable>();
             iHittable?.TakeHit();

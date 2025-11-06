@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7864403018244590269}
-  m_Layer: 7
+  m_Layer: 12
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackDamage: 10
   _knockbackThrust: 5
+  _knockbackTime: 0.3
   _damageRadius: 0.95
   _hitboxCenter: {fileID: 7864403018244590269}
 --- !u!61 &4664950446664071481

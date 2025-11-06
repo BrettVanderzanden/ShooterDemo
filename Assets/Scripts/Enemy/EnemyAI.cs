@@ -60,6 +60,16 @@ public class EnemyAI : MonoBehaviour
         MovementStateControl();
     }
 
+    private void OnEnable()
+    {
+        PlayerHealth.OnDeath += OnPlayerDeath;
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealth.OnDeath -= OnPlayerDeath;
+    }
+
     private void MovementStateControl()
     {
         _timeInCurrentState += Time.deltaTime;
@@ -372,6 +382,11 @@ public class EnemyAI : MonoBehaviour
         {
             TransitionTo(EnemyAIState.Aggro);
         }
+    }
+
+    private void OnPlayerDeath(PlayerHealth health)
+    {
+        TransitionTo(EnemyAIState.Idle);
     }
 }
 

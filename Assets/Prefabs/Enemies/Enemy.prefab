@@ -52,6 +52,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -73,6 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -140424049
   m_SortingLayer: 4
   m_SortingOrder: -1
@@ -140,6 +143,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -161,6 +166,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1535584913
   m_SortingLayer: 2
   m_SortingOrder: 0
@@ -334,6 +340,7 @@ MonoBehaviour:
   _aggroRange: 10
   _aggroPauseDuration: 1
   _aggroCooldown: 4
+  _minimumChaseDuration: 2
 --- !u!114 &14949344919044638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingHealth: 100
+  _splatterPrefab: {fileID: 154989802432832758, guid: 554dca5f0da84cb48af13bfb75829914, type: 3}
 --- !u!114 &-8743739978372064833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +390,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860beb45739c4134d8d74f7447cbbeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knockbackTime: 0.2
 --- !u!114 &5071014064180653872
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public static Action<EnemyHealth> OnDeath;
 
     [SerializeField] private int _startingHealth = 100;
+    [SerializeField] private GameObject _splatterPrefab;
 
     private Knockback _knockback;
     private EnemyAI _enemyAI;
@@ -38,6 +39,7 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         if (_currentHealth <= 0)
         {
             OnDeath?.Invoke(this);
+            SpawnDeathSplatter();
             Destroy(gameObject);
         }
     }
@@ -55,6 +57,11 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public void TakeHit()
     {
         // hit fx
+    }
+
+    private void SpawnDeathSplatter()
+    {
+        GameObject newSplatterPrefab = Instantiate(_splatterPrefab, transform.position, transform.rotation);
     }
 
 }

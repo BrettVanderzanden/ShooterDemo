@@ -21,10 +21,12 @@ public class Bullet : MonoBehaviour
     private Shooter _shooter;
     private Gunner _gunner;
     private float _expirationTime;
+    private TrailRenderer _trailRenderer;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _trailRenderer = GetComponent<TrailRenderer>();
     }
 
     private void FixedUpdate()
@@ -41,7 +43,7 @@ public class Bullet : MonoBehaviour
         _gun = gun;
         transform.position = bulletSpawnPos;
         _fireDirection = (mousePos - bulletSpawnPos).normalized;
-        _expirationTime = Time.time + _maxLifeTime;
+        _expirationTime = Time.fixedTime + _maxLifeTime; // is Time.fixedTime better than Time.time since we expire during FixedUpdate?
     }
 
     public void Init(Shooter shooter, Vector2 bulletSpawnPos, Vector2 targetDir)
@@ -49,7 +51,7 @@ public class Bullet : MonoBehaviour
         _shooter = shooter;
         transform.position = bulletSpawnPos;
         _fireDirection = targetDir.normalized;
-        _expirationTime = Time.time + _maxLifeTime;
+        _expirationTime = Time.fixedTime + _maxLifeTime;
     }
 
     public void Init(Gunner gunner, Vector2 bulletSpawnPos, Vector2 targetDir)
@@ -57,7 +59,7 @@ public class Bullet : MonoBehaviour
         _gunner = gunner;
         transform.position = bulletSpawnPos;
         _fireDirection = targetDir.normalized;
-        _expirationTime = Time.time + _maxLifeTime;
+        _expirationTime = Time.fixedTime + _maxLifeTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

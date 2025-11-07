@@ -61,7 +61,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
 
     private void SpawnDeathSplatter()
     {
-        GameObject newSplatterPrefab = Instantiate(_splatterPrefab, transform.position, transform.rotation);
+        Quaternion randomRotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(0f, 360f));
+        GameObject newSplatterPrefab = Instantiate(_splatterPrefab, transform.position, randomRotation);
+        SpriteRenderer splatterSpriteRenderer = newSplatterPrefab.GetComponent<SpriteRenderer>();
+        splatterSpriteRenderer.color = Color.red;
     }
 
 }

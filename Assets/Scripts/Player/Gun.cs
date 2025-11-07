@@ -39,11 +39,14 @@ public class Gun : MonoBehaviour
     private FrameInput _frameInput;
     private TNT _activeTNT;
 
+    private List<Vector3> _bulletReleasePositions;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _playerInput = GetComponentInParent<PlayerInput>();
         _frameInput = _playerInput.FrameInput;
+        _bulletReleasePositions = new List<Vector3>();
     }
 
     void Start()
@@ -95,14 +98,19 @@ public class Gun : MonoBehaviour
             return Instantiate(_bulletPrefab);
         }, bullet =>
         {
+            var trail = bullet.GetComponent<TrailRenderer>();
+            trail.enabled = false;
+            trail.Clear();
+            trail.enabled = true;
             bullet.gameObject.SetActive(true);
         }, bullet =>
         {
+            //_bulletReleasePositions.Add(bullet.transform.position);
             bullet.gameObject.SetActive(false);
         }, bullet =>
         {
             Destroy(bullet);
-        }, false, 20, 40);
+        }, false, 40, 200);
     }
 
     private void Shoot()
@@ -200,6 +208,15 @@ public class Gun : MonoBehaviour
     {
         Gizmos.color = Color.limeGreen;
         Gizmos.DrawWireSphere(transform.position, 0.1f);
+
+        if (_bulletReleasePositions != null)
+        {
+            Gizmos.color = Color.red;
+            foreach (Vector3 pos in _bulletReleasePositions)
+            {
+                Gizmos.DrawWireCube(pos, Vector3.one * 0.2f);
+            }
+        }
     }
 
     private void RefillAmmo()

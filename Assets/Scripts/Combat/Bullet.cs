@@ -21,12 +21,10 @@ public class Bullet : MonoBehaviour
     private Shooter _shooter;
     private Gunner _gunner;
     private float _expirationTime;
-    private TrailRenderer _trailRenderer;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _trailRenderer = GetComponent<TrailRenderer>();
     }
 
     private void FixedUpdate()
@@ -64,6 +62,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!gameObject.activeInHierarchy)
+        {
+            return;
+        }
         Instantiate(_bulletVFX, transform.position, Quaternion.identity);
 
         IHittable iHittable = other.gameObject.GetComponent<IHittable>();
@@ -86,6 +88,7 @@ public class Bullet : MonoBehaviour
 
     private void ReleaseBullet()
     {
+        // this should be improved
         if (_gun != null)
         {
             _gun.ReleaseBulletFromPool(this);

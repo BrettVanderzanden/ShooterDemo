@@ -94,23 +94,24 @@ public class Gun : MonoBehaviour
     private void CreateBulletPool()
     {
         _bulletPool = new ObjectPool<Bullet>(() =>
-        {
+        { // Create
             return Instantiate(_bulletPrefab);
         }, bullet =>
-        {
-            var trail = bullet.GetComponent<TrailRenderer>();
+        { // OnGet
+            TrailRenderer trail = bullet.GetComponent<TrailRenderer>();
+            // prevent trail from being weird with object pool
             trail.enabled = false;
             trail.Clear();
             trail.enabled = true;
             bullet.gameObject.SetActive(true);
         }, bullet =>
-        {
-            //_bulletReleasePositions.Add(bullet.transform.position);
+        { // OnRelease
+            _bulletReleasePositions.Add(bullet.transform.position);
             bullet.gameObject.SetActive(false);
         }, bullet =>
-        {
+        { // OnDestroy
             Destroy(bullet);
-        }, false, 40, 200);
+        }, false, 40, 200); // collectionCheck, default capacity, max capacity
     }
 
     private void Shoot()

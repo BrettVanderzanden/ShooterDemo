@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4512012234684727040}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.46, y: 0.91, z: 0}
+  m_LocalPosition: {x: 1.1, y: 1.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -255,7 +255,7 @@ MonoBehaviour:
   _attackDamage: 10
   _knockbackThrust: 5
   _knockbackTime: 0.3
-  _damageRadius: 0.95
+  _damageRadius: 1.07
   _hitboxCenter: {fileID: 7864403018244590269}
 --- !u!61 &4664950446664071481
 BoxCollider2D:

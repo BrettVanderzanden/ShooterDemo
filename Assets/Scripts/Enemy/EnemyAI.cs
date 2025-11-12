@@ -386,6 +386,12 @@ public class EnemyAI : MonoBehaviour
 
     private void OnPlayerDeath(PlayerHealth health)
     {
+        StartCoroutine(WaitThenIdle());
+    }
+
+    private IEnumerator WaitThenIdle()
+    {
+        yield return new WaitForSeconds(1.0f);
         TransitionTo(EnemyAIState.Idle);
     }
 }

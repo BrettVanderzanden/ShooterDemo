@@ -12,13 +12,13 @@ public class Basher : MonoBehaviour, IEnemy
     [SerializeField] private float _damageRadius = 3f;
     [SerializeField] private Transform _hitboxCenter;
 
-    private int _playerLayer;
+    //private int _playerLayer;
     private Collider2D[] _attackHits;
 
     private void Awake()
     {
         //_hitboxCenter = transform.Find("Hitbox");
-        _playerLayer = LayerMask.NameToLayer("Player");
+        //_playerLayer = LayerMask.NameToLayer("Player");
     }
 
     public void Attack()
@@ -40,8 +40,6 @@ public class Basher : MonoBehaviour, IEnemy
         _attackHits = Physics2D.OverlapCircleAll(_hitboxCenter.position, _damageRadius);
         foreach (var hit in _attackHits)
         {
-            Debug.Log("Basher Deal Damage hit");
-
             BasherHit?.Invoke();
 
             IHittable iHittable = hit.gameObject.GetComponent<IHittable>();
@@ -50,6 +48,11 @@ public class Basher : MonoBehaviour, IEnemy
             IDamageable iDamageable = hit.gameObject.GetComponent<IDamageable>();
             iDamageable?.TakeDamage(_attackDamage);
             iDamageable?.TakeKnockback(transform.position, _knockbackThrust, _knockbackTime);
+
+            if (iDamageable != null)
+            {
+                Debug.Log("Basher Deal Damage hit");
+            }
         }
     }
 

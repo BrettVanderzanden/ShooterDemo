@@ -125,7 +125,10 @@ public class UIManager : Singleton<UIManager>
             _TNTtimer = _TNTCooldownTime;
         }
 
-        _TNTCooldownImage.fillAmount = _TNTtimer / _TNTCooldownTime;
+        if (_TNTCooldownImage != null)
+        {
+            _TNTCooldownImage.fillAmount = _TNTtimer / _TNTCooldownTime;
+        }
     }
 
     private void OnTNTExplode()

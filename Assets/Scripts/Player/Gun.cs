@@ -33,6 +33,7 @@ public class Gun : MonoBehaviour
     private float _lastTNTTime = 0f;
     private int _bulletAmmo = 10;
     private int _tntAmmo = 1;
+    private bool _controlEnabled = true;
 
     private Animator _animator;
     private PlayerInput _playerInput;
@@ -69,6 +70,7 @@ public class Gun : MonoBehaviour
         OnTNTThrow += ThrowTNT;
         OnTNTThrow += ThrowTNTAnimation;
         PlayerController.OnAmmoPickup += RefillAmmo;
+        PlayerHealth.OnDeath += HandlePlayerDeath;
     }
 
     private void OnDisable()
@@ -79,6 +81,7 @@ public class Gun : MonoBehaviour
         OnTNTThrow -= ThrowTNT;
         OnTNTThrow -= ThrowTNTAnimation;
         PlayerController.OnAmmoPickup -= RefillAmmo;
+        PlayerHealth.OnDeath -= HandlePlayerDeath;
     }
 
     private void GatherInput()
@@ -116,6 +119,11 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
+        if (!_controlEnabled)
+        {
+            return;
+        }
+
         if (_frameInput.Shoot && Time.time >= _lastFireTime)
         {
             PullTrigger();
@@ -224,5 +232,15 @@ public class Gun : MonoBehaviour
     {
         _bulletAmmo = _bulletMaxAmmo;
         _tntAmmo = _tntMaxAmmo;
+    }
+
+    private void DisableControl()
+    {
+        _controlEnabled = false;
+    }
+
+    private void HandlePlayerDeath(PlayerHealth health)
+    {
+        DisableControl();
     }
 }

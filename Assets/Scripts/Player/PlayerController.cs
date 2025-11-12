@@ -62,6 +62,7 @@ public class PlayerController : Singleton<PlayerController>
         OnJump += StartJump;
         OnDash += StartDashCooldown;
         EndPoint.OnExitReached += DisableControl;
+        PlayerHealth.OnDeath += HandlePlayerDeath;
         SceneManager.sceneLoaded += OnLevelLoaded;
     }
 
@@ -70,6 +71,7 @@ public class PlayerController : Singleton<PlayerController>
         OnJump -= StartJump;
         OnDash -= StartDashCooldown;
         EndPoint.OnExitReached -= DisableControl;
+        PlayerHealth.OnDeath -= HandlePlayerDeath;
         SceneManager.sceneLoaded -= OnLevelLoaded;
     }
 
@@ -236,5 +238,10 @@ public class PlayerController : Singleton<PlayerController>
             OnAmmoPickup?.Invoke();
             Debug.Log("Ammo picked up");
         }
+    }
+
+    private void HandlePlayerDeath(PlayerHealth health)
+    {
+        DisableControl();
     }
 }

@@ -1087,7 +1087,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletSpawnPoint: {fileID: 2078230713373596090}
-  _bulletPrefab: {fileID: 8696355416379102987, guid: ac336c7d505c9f441bf8b25002114715, type: 3}
+  _bulletPrefab: {fileID: 8095589951984567951, guid: d3902d52289d37e46a184e5e91854c05, type: 3}
   _gunFireCD: 0.1
   _bulletMaxAmmo: 10
   _tntPrefab: {fileID: 1667796442381628257, guid: d02382e8f41925045bc86c00ec3013e6, type: 3}

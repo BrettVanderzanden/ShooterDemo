@@ -18,7 +18,13 @@ public class UIManager : Singleton<UIManager>
 
     [SerializeField] Image _TNTCooldownImage;
     [SerializeField] public float _TNTCooldownTime = 1f;
+    [SerializeField] Image _TNTIconImage;
+    [SerializeField] Sprite _IconTNT;
+    [SerializeField] Sprite _IconPlunger;
+    [SerializeField] Sprite _IconNoTNT;
     private float _TNTtimer = 1f;
+    private int _TNTammo = 1;
+    private bool _TNTDeployed = false;
 
     protected override void Awake()
     {
@@ -29,10 +35,14 @@ public class UIManager : Singleton<UIManager>
 
     private void OnEnable()
     {
+        _TNTIconImage.sprite = _IconTNT;
+        
         SceneManager.sceneLoaded += OnLevelLoaded;
         EndPoint.OnExitReached += OnLevelExitReached;
         PlayerHealth.OnDeath += OnPlayerDeath;
         TNT.OnTNTExplode += OnTNTExplode;
+        Gun.OnTNTThrow += OnThrowTNT;
+        PlayerController.OnAmmoPickup += OnAmmoPickup;
     }
 
     private void OnDisable()
@@ -41,6 +51,8 @@ public class UIManager : Singleton<UIManager>
         EndPoint.OnExitReached -= OnLevelExitReached;
         PlayerHealth.OnDeath -= OnPlayerDeath;
         TNT.OnTNTExplode -= OnTNTExplode;
+        Gun.OnTNTThrow -= OnThrowTNT;
+        PlayerController.OnAmmoPickup -= OnAmmoPickup;
     }
 
     private void Start()
@@ -134,6 +146,29 @@ public class UIManager : Singleton<UIManager>
     private void OnTNTExplode()
     {
         _TNTtimer = 0f;
+        if (_TNTammo == 0)
+        {
+            _TNTIconImage.sprite = _IconNoTNT;
+        }
+        else
+        {
+            _TNTIconImage.sprite = _IconTNT;
+        }
+    }
+
+    private void OnThrowTNT()
+    {
+        _TNTIconImage.sprite = _IconPlunger;
+        _TNTammo = 0;
+    }
+
+    private void OnAmmoPickup()
+    {
+        _TNTammo = 1;
+        if (_TNTDeployed == false)
+        {
+            _TNTIconImage.sprite = _IconTNT;
+        }
     }
 
 }
